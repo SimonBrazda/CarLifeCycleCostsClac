@@ -68,7 +68,8 @@
             <Label Content="MTBF [km]:" Grid.Row="10" Grid.Column="0" VerticalAlignment="Bottom"/>
             <Label Content="Average repair Costs [Kč]:" Grid.Row="10" Grid.Column="1" VerticalAlignment="Bottom"/>
             <Label Content="Fuel consumption [l/100 km]:" Grid.Row="12" Grid.Column="0" VerticalAlignment="Bottom"/>
-            
+            <Label Content="Life Cycle Cost:" Grid.Row="12" Grid.Column="1" VerticalAlignment="Bottom"/>
+
             <TextBox Name="provozTextBox" Height="30" Grid.Row="1" HorizontalAlignment="Left" Margin="5,0,0,0" TextWrapping="Wrap" Text="{Binding SelectedCar.ExpectedRangeOfOperation,UpdateSourceTrigger=LostFocus}" Width="200"/>
             <TextBox Name="PHMpriceTextBox" Height="30" Grid.Row="1" Grid.Column="1" HorizontalAlignment="Left" Margin="5,0,0,0" TextWrapping="Wrap" Text="{Binding SelectedCar.FuelPrice,UpdateSourceTrigger=LostFocus}" Width="200"/>
             <TextBox Name="purchasePriceTextBox" Height="30" Grid.Row="3" Grid.Column="0" HorizontalAlignment="Left" Margin="5,0,0,0" TextWrapping="Wrap" Text="{Binding SelectedCar.PurchasePrice,UpdateSourceTrigger=LostFocus}" Width="200"/>
@@ -82,7 +83,9 @@
             <TextBox Name="MTBFPriceTextBox" Height="30" Grid.Row="11" Grid.Column="0" HorizontalAlignment="Left" Margin="5,0,0,0" TextWrapping="Wrap" Text="{Binding SelectedCar.MTBF,UpdateSourceTrigger=LostFocus}" Width="200"/>
             <TextBox Name="averageRepairCostsTextBox" Height="30" Grid.Row="11" Grid.Column="1" HorizontalAlignment="Left" Margin="5,0,0,0" TextWrapping="Wrap" Text="{Binding SelectedCar.AverageRepairCosts,UpdateSourceTrigger=LostFocus}" Width="200"/>
             <TextBox Name="fuelConsumptionTextBox" Height="30" Grid.Row="13" Grid.Column="0" HorizontalAlignment="Left" Margin="5,0,0,0" TextWrapping="Wrap" Text="{Binding SelectedCar.FuelConsumption,UpdateSourceTrigger=LostFocus}" Width="200"/>
-            
+
+            <TextBlock Name="lifeCycleCostTextBlock" Text="{Binding SelectedCar.LifeCycleCost,Mode=TwoWay,NotifyOnTargetUpdated=True,UpdateSourceTrigger=PropertyChanged}" Grid.Row="13" Grid.Column="1"/>
+
         </Grid>
     </Grid>
 </Window>

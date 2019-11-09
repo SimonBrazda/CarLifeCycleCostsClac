@@ -45,8 +45,9 @@ namespace CarLifeCycleCostsClac
                 words.Add(line.Substring(startIndex, line.Length - startIndex));
                 
   
-                Cars.Add(new Car(words[0], words[1], words[2], words[3], words[4], words[5], words[6],
-                    words[7], words[8], words[9], words[10], words[11], words[12]));
+                Cars.Add(new Car(words[0], int.Parse(words[1]), float.Parse(words[2]), int.Parse(words[3]), int.Parse(words[4]),
+                    int.Parse(words[5]), int.Parse(words[6]), int.Parse(words[7]), int.Parse(words[8]), int.Parse(words[9]),
+                    int.Parse(words[10]), int.Parse(words[11]), int.Parse(words[12]), float.Parse(words[13])));
             }
             
         }
