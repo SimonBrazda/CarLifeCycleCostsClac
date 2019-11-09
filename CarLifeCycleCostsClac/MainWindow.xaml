@@ -1,0 +1,88 @@
+﻿<Window x:Class="CarLifeCycleCostsClac.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:CarLifeCycleCostsClac"
+        mc:Ignorable="d"
+        Title="CarLifeCycleCostsCalc v.0.1" Height="800" Width="800">
+    <Grid Margin="10">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="440"/>
+            <RowDefinition Height="100"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="200"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <ListBox Name="carListBox" SelectedItem="{Binding SelectedCar}" HorizontalAlignment="Left" Margin="20,25,0,0" Height="400" VerticalAlignment="Top" Width="150" ItemsSource="{Binding Cars}">
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <TextBlock Text="{Binding CarModel}"/>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
+
+        <StackPanel Grid.Row="1" Grid.ColumnSpan="4" Orientation="Horizontal" Margin="15,0,0,20" HorizontalAlignment="Left" VerticalAlignment="Top">
+            <TextBox Name="carModelTextBox" Height="30" Margin="5,0,0,0" TextWrapping="Wrap" Text="Car1" Width="150"/>
+            <Button Name="addButton" Content="Add" Grid.Row="1" Margin="10,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Width="150" Height="30" Click="addButton_Click"/>
+            <Button Name="removeButton" Content="Remove" Grid.Row="1" Margin="25,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Width="150" Height="30" Click="removeButton_Click"/>
+            <Button Name="saveButton" Content="Save" Grid.Row="1" Margin="25,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Width="150" Height="30" Click="saveButton_Click"/>
+            
+        </StackPanel>
+        <Label Content="Car model:" Margin="15,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+        <Grid Grid.Column="1">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="30"/>
+                <RowDefinition Height="30"/>
+                <RowDefinition Height="30"/>
+                <RowDefinition Height="30"/>
+                <RowDefinition Height="30"/>
+                <RowDefinition Height="30"/>
+                <RowDefinition Height="30"/>
+                <RowDefinition Height="30"/>
+                <RowDefinition Height="30"/>
+                <RowDefinition Height="30"/>
+                <RowDefinition Height="30"/>
+                <RowDefinition Height="30"/>
+                <RowDefinition Height="30"/>
+                <RowDefinition Height="30"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="250"/>
+                <ColumnDefinition Width="250"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Label Content="Předpokládný rozsah provozu [km/rok]:" VerticalAlignment="Bottom"/>
+            <Label Content="Cena PHM [Kč/l]:" Grid.Column="1" VerticalAlignment="Bottom"/>
+            <Label Content="Purchase price [Kč]:" Grid.Row="2" Grid.Column="0" VerticalAlignment="Bottom"/>
+            <Label Content="Technical life [km]:" Grid.Row="2" Grid.Column="1" VerticalAlignment="Bottom"/>
+            <Label Content="Maintenance 1 [km] or 1 x per a year:" Grid.Row="4" Grid.Column="0" VerticalAlignment="Bottom"/>
+            <Label Content="Maintenance 2 [km] or 1 x per 2 years:" Grid.Row="6" Grid.Column="0" VerticalAlignment="Bottom"/>
+            <Label Content="Maintenance 3 [km] or 1 x per 4 years:" Grid.Row="8" Grid.Column="0" VerticalAlignment="Bottom"/>
+            <Label Content="Maintenance 1 price [Kč]:" Grid.Row="4" Grid.Column="1" VerticalAlignment="Bottom"/>
+            <Label Content="Maintenance 2 price [Kč]:" Grid.Row="6" Grid.Column="1" VerticalAlignment="Bottom"/>
+            <Label Content="Maintenance 3 price [Kč]:" Grid.Row="8" Grid.Column="1" VerticalAlignment="Bottom"/>
+            <Label Content="MTBF [km]:" Grid.Row="10" Grid.Column="0" VerticalAlignment="Bottom"/>
+            <Label Content="Average repair Costs [Kč]:" Grid.Row="10" Grid.Column="1" VerticalAlignment="Bottom"/>
+            <Label Content="Fuel consumption [l/100 km]:" Grid.Row="12" Grid.Column="0" VerticalAlignment="Bottom"/>
+            
+            <TextBox Name="provozTextBox" Height="30" Grid.Row="1" HorizontalAlignment="Left" Margin="5,0,0,0" TextWrapping="Wrap" Text="{Binding SelectedCar.ExpectedRangeOfOperation,UpdateSourceTrigger=LostFocus}" Width="200"/>
+            <TextBox Name="PHMpriceTextBox" Height="30" Grid.Row="1" Grid.Column="1" HorizontalAlignment="Left" Margin="5,0,0,0" TextWrapping="Wrap" Text="{Binding SelectedCar.FuelPrice,UpdateSourceTrigger=LostFocus}" Width="200"/>
+            <TextBox Name="purchasePriceTextBox" Height="30" Grid.Row="3" Grid.Column="0" HorizontalAlignment="Left" Margin="5,0,0,0" TextWrapping="Wrap" Text="{Binding SelectedCar.PurchasePrice,UpdateSourceTrigger=LostFocus}" Width="200"/>
+            <TextBox Name="technicalLifeTextBox" Height="30" Grid.Row="3" Grid.Column="1" HorizontalAlignment="Left" Margin="5,0,0,0" TextWrapping="Wrap" Text="{Binding SelectedCar.TechnicalLife,UpdateSourceTrigger=LostFocus}" Width="200"/>
+            <TextBox Name="maintenance1TextBox" Height="30" Grid.Row="5" Grid.Column="0" HorizontalAlignment="Left" Margin="5,0,0,0" TextWrapping="Wrap" Text="{Binding SelectedCar.Maintenance1,UpdateSourceTrigger=LostFocus}" Width="200"/>
+            <TextBox Name="maintenance2TextBox" Height="30" Grid.Row="7" Grid.Column="0" HorizontalAlignment="Left" Margin="5,0,0,0" TextWrapping="Wrap" Text="{Binding SelectedCar.Maintenance2,UpdateSourceTrigger=LostFocus}" Width="200"/>
+            <TextBox Name="maintenance3TextBox" Height="30" Grid.Row="9" Grid.Column="0" HorizontalAlignment="Left" Margin="5,0,0,0" TextWrapping="Wrap" Text="{Binding SelectedCar.Maintenance3,UpdateSourceTrigger=LostFocus}" Width="200"/>
+            <TextBox Name="maintenance1PriceTextBox" Height="30" Grid.Row="5" Grid.Column="1" HorizontalAlignment="Left" Margin="5,0,0,0" TextWrapping="Wrap" Text="{Binding SelectedCar.Maintenance1Price,UpdateSourceTrigger=LostFocus}" Width="200"/>
+            <TextBox Name="maintenance2PriceTextBox" Height="30" Grid.Row="7" Grid.Column="1" HorizontalAlignment="Left" Margin="5,0,0,0" TextWrapping="Wrap" Text="{Binding SelectedCar.Maintenance2Price,UpdateSourceTrigger=LostFocus}" Width="200"/>
+            <TextBox Name="maintenance3PriceTextBox" Height="30" Grid.Row="9" Grid.Column="1" HorizontalAlignment="Left" Margin="5,0,0,0" TextWrapping="Wrap" Text="{Binding SelectedCar.Maintenance3Price,UpdateSourceTrigger=LostFocus}" Width="200"/>
+            <TextBox Name="MTBFPriceTextBox" Height="30" Grid.Row="11" Grid.Column="0" HorizontalAlignment="Left" Margin="5,0,0,0" TextWrapping="Wrap" Text="{Binding SelectedCar.MTBF,UpdateSourceTrigger=LostFocus}" Width="200"/>
+            <TextBox Name="averageRepairCostsTextBox" Height="30" Grid.Row="11" Grid.Column="1" HorizontalAlignment="Left" Margin="5,0,0,0" TextWrapping="Wrap" Text="{Binding SelectedCar.AverageRepairCosts,UpdateSourceTrigger=LostFocus}" Width="200"/>
+            <TextBox Name="fuelConsumptionTextBox" Height="30" Grid.Row="13" Grid.Column="0" HorizontalAlignment="Left" Margin="5,0,0,0" TextWrapping="Wrap" Text="{Binding SelectedCar.FuelConsumption,UpdateSourceTrigger=LostFocus}" Width="200"/>
+            
+        </Grid>
+    </Grid>
+</Window>
