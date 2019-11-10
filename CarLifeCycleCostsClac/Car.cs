@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace CarLifeCycleCostsClac
@@ -17,6 +18,9 @@ namespace CarLifeCycleCostsClac
         private int maintenance1Price;
         private int maintenance2Price;
         private int maintenance3Price;
+        private int maintenance1Years;
+        private int maintenance2Years;
+        private int maintenance3Years;
         private int mTBF;
         private int averageRepairCosts;
         private float fuelConsumption;
@@ -201,6 +205,57 @@ namespace CarLifeCycleCostsClac
                 OnPropertyChanged("Maintenance3Price");
             }
         }
+        public int Maintenance1Years
+        {
+            get
+            {
+                if (string.IsNullOrEmpty(maintenance1Years.ToString()))
+                {
+                    return 0;
+                }
+                return maintenance1Years;
+            }
+            set
+            {
+                maintenance1Years = value;
+                updateLifeCycleCost();
+                OnPropertyChanged("Maintenance1Years");
+            }
+        }
+        public int Maintenance2Years
+        {
+            get
+            {
+                if (string.IsNullOrEmpty(maintenance2Years.ToString()))
+                {
+                    return 0;
+                }
+                return maintenance2Years;
+            }
+            set
+            {
+                maintenance2Years = value;
+                updateLifeCycleCost();
+                OnPropertyChanged("Maintenance2Years");
+            }
+        }
+        public int Maintenance3Years
+        {
+            get
+            {
+                if (string.IsNullOrEmpty(maintenance3Years.ToString()))
+                {
+                    return 0;
+                }
+                return maintenance3Years;
+            }
+            set
+            {
+                maintenance3Years = value;
+                updateLifeCycleCost();
+                OnPropertyChanged("Maintenance3Years");
+            }
+        }
         public int MTBF
         {
             get
@@ -264,8 +319,9 @@ namespace CarLifeCycleCostsClac
 
         public Car(string carModel, int expectedRangeOfOperation = 15000, float fuelPrice = 30.0f, int purchasePrice = 340000,
             int technicalLife = 250000, int maintenance1 = 25000, int maintenance2 = 50000, int maintenance3 = 100000,
-            int maintenance1Price = 8000, int maintenance2Price = 12000, int maintenance3Price = 16000, int MTBF = 65000,
-            int averageRepairCosts = 25000, float fuelConsumption = 7.6f)
+            int maintenance1Price = 8000, int maintenance2Price = 12000, int maintenance3Price = 16000, int maintenance1Years = 1,
+            int maintenance2Years = 2, int maintenance3Years = 4, int mTBF = 65000, int averageRepairCosts = 25000,
+            float fuelConsumption = 7.6f)
         {
             this.carModel = carModel;
             this.expectedRangeOfOperation = expectedRangeOfOperation;
@@ -278,7 +334,10 @@ namespace CarLifeCycleCostsClac
             this.maintenance1Price = maintenance1Price;
             this.maintenance2Price = maintenance2Price;
             this.maintenance3Price = maintenance3Price;
-            this.MTBF = MTBF;
+            this.maintenance1Years = maintenance1Years;
+            this.maintenance2Years = maintenance2Years;
+            this.maintenance3Years = maintenance3Years;
+            this.mTBF = mTBF;
             this.averageRepairCosts = averageRepairCosts;
             this.fuelConsumption = fuelConsumption;
             updateLifeCycleCost();
@@ -286,58 +345,92 @@ namespace CarLifeCycleCostsClac
         public void updateLifeCycleCost()
         {
             int preventiveMaintenance = 0;
-            int yearsOfUse = 0;
+            int yearsOfUse = 1;
             int localTechnicalLife = technicalLife;
-            if (expectedRangeOfOperation < maintenance1)
-            {
-                while (localTechnicalLife > expectedRangeOfOperation)
+            List<int> maintenances = new List<int> { maintenance1, maintenance2, maintenance3 };
+            maintenances.Sort();
+            maintenances.Reverse();
+            List<int> maintenancePrices = new List<int> { maintenance1Price, maintenance2Price, maintenance3Price };
+            maintenancePrices.Sort();
+            maintenancePrices.Reverse();
+
+
+           
+                if(maintenance1Years == 0 || maintenance1 == 0 || maintenance1Price == 0)
                 {
-                    if ( yearsOfUse == 0 || yearsOfUse % 2 == 1)
+                    maintenance1Years = 0;
+                    maintenance1 = 0;
+                    maintenance1Price = 0;
+                }
+                if (maintenance2Years == 0 || maintenance2 == 0 || maintenance2Price == 0)
+                {
+                    maintenance2Years = 0;
+                    maintenance2 = 0;
+                    maintenance2Price = 0;
+                }
+                if (maintenance3Years == 0 || maintenance3 == 0 || maintenance3Price == 0)
+                {
+                    maintenance3Years = 0;
+                    maintenance3 = 0;
+                    maintenance3Price = 0;
+                }
+
+                if (expectedRangeOfOperation < maintenances.Where(x => x > 0).Min() && (maintenance1Years > 0 || maintenance2Years > 0 || maintenance3Years > 0))
+                {
+                    List<int> maintenanceYears = new List<int> { maintenance1Years, maintenance2Years, maintenance3Years };
+                    maintenanceYears.Sort();
+                    maintenanceYears.Reverse();
+                    while (localTechnicalLife > expectedRangeOfOperation)
                     {
-                        preventiveMaintenance += maintenance1Price;
-                        ++yearsOfUse;
-                        localTechnicalLife -= expectedRangeOfOperation;
-                    }
-                    else if(yearsOfUse % 2 == 0)
-                    {
-                        preventiveMaintenance += maintenance2Price;
-                        ++yearsOfUse;
-                        localTechnicalLife -= expectedRangeOfOperation;
-                    }
-                    else if(yearsOfUse % 4 == 0)
-                    {
-                        preventiveMaintenance += maintenance3Price;
-                        ++yearsOfUse;
-                        localTechnicalLife -= expectedRangeOfOperation;
+                        if (maintenanceYears[0] > 0 && yearsOfUse % maintenanceYears[0] == 0)
+                        {
+                            preventiveMaintenance += maintenancePrices[0];
+                            ++yearsOfUse;
+                            localTechnicalLife -= expectedRangeOfOperation;
+                        }
+                        else if (maintenanceYears[1] > 0 && yearsOfUse % maintenanceYears[1] == 0)
+                        {
+                            preventiveMaintenance += maintenancePrices[1];
+                            ++yearsOfUse;
+                            localTechnicalLife -= expectedRangeOfOperation;
+                        }
+                        else if (maintenanceYears[2] > 0 && yearsOfUse % maintenanceYears[2] == 0)
+                        {
+                            preventiveMaintenance += maintenancePrices[2];
+                            ++yearsOfUse;
+                            localTechnicalLife -= expectedRangeOfOperation;
+                        }
                     }
                 }
-            }
-            else
-            {
-                int distance = 0;
-                while (localTechnicalLife > maintenance1)
+                else
                 {
-                    if (distance % maintenance1 == 0)
+                    int minDistance = maintenances.Where(x => x > 0).Min();
+                    int distance = minDistance;
+                    while (localTechnicalLife > minDistance)
                     {
-                        preventiveMaintenance += maintenance1Price;
-                        localTechnicalLife -= expectedRangeOfOperation;
-                        distance += maintenance1;
-                    }
-                    else if (distance % maintenance2 == 0)
-                    {
-                        preventiveMaintenance += maintenance2Price;
-                        localTechnicalLife -= expectedRangeOfOperation;
-                        distance += maintenance2;
-                    }
-                    else if (distance % maintenance3 == 0)
-                    {
-                        preventiveMaintenance += maintenance3Price;
-                        localTechnicalLife -= expectedRangeOfOperation;
-                        distance += maintenance3;
+                        if (maintenances[0] > 0 && distance % maintenances[0] == 0)
+                        {
+                            preventiveMaintenance += maintenancePrices[0];
+                            localTechnicalLife -= minDistance;
+                            distance += minDistance;
+                        }
+                        else if (maintenances[1] > 0 && distance % maintenances[1] == 0)
+                        {
+                            preventiveMaintenance += maintenancePrices[1];
+                            localTechnicalLife -= minDistance;
+                            distance += minDistance;
+                        }
+                        else if (maintenances[2] > 0 && distance % maintenances[2] == 0)
+                        {
+                            preventiveMaintenance += maintenancePrices[2];
+                            localTechnicalLife -= minDistance;
+                            distance += minDistance;
+                        }
                     }
                 }
-            }
-            LifeCycleCost = (fuelConsumption / 100 * fuelPrice * technicalLife) + (technicalLife / mTBF * averageRepairCosts) + preventiveMaintenance;
+                LifeCycleCost = purchasePrice + (fuelConsumption / 100 * fuelPrice * technicalLife) + preventiveMaintenance + (technicalLife / mTBF * averageRepairCosts);
+            
+            
         }
     }
 }

@@ -47,7 +47,8 @@ namespace CarLifeCycleCostsClac
   
                 Cars.Add(new Car(words[0], int.Parse(words[1]), float.Parse(words[2]), int.Parse(words[3]), int.Parse(words[4]),
                     int.Parse(words[5]), int.Parse(words[6]), int.Parse(words[7]), int.Parse(words[8]), int.Parse(words[9]),
-                    int.Parse(words[10]), int.Parse(words[11]), int.Parse(words[12]), float.Parse(words[13])));
+                    int.Parse(words[10]), int.Parse(words[11]), int.Parse(words[12]), int.Parse(words[13]), int.Parse(words[14]),
+                    int.Parse(words[15]), float.Parse(words[16])));
             }
             
         }
@@ -94,7 +95,8 @@ namespace CarLifeCycleCostsClac
             {
                 lines.Add(car.CarModel + "," + car.ExpectedRangeOfOperation + "," + car.FuelPrice + "," + car.PurchasePrice + "," + car.TechnicalLife +
                     "," + car.Maintenance1 + "," + car.Maintenance2 + "," + car.Maintenance3 + "," + car.Maintenance1Price + "," + car.Maintenance2Price +
-                    "," + car.Maintenance3Price + "," + car.MTBF + "," + car.AverageRepairCosts + "," + car.FuelConsumption);
+                    "," + car.Maintenance3Price + "," + car.Maintenance1Years + "," + car.Maintenance2Years + "," + car.Maintenance3Years + "," + car.MTBF +
+                    "," + car.AverageRepairCosts + "," + car.FuelConsumption);
             }
             
             File.WriteAllLines(filePath, lines);

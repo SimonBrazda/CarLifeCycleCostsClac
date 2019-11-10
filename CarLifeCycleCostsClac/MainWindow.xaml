@@ -52,16 +52,17 @@
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="250"/>
-                <ColumnDefinition Width="250"/>
+                <ColumnDefinition Width="220"/>
+                <ColumnDefinition Width="110"/>
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
-            <Label Content="Předpokládný rozsah provozu [km/rok]:" VerticalAlignment="Bottom"/>
-            <Label Content="Cena PHM [Kč/l]:" Grid.Column="1" VerticalAlignment="Bottom"/>
+            <Label Content="Expected range of operation [km/year]:" VerticalAlignment="Bottom"/>
+            <Label Content="Fuel price [Kč/l]:" Grid.Column="1" VerticalAlignment="Bottom"/>
             <Label Content="Purchase price [Kč]:" Grid.Row="2" Grid.Column="0" VerticalAlignment="Bottom"/>
             <Label Content="Technical life [km]:" Grid.Row="2" Grid.Column="1" VerticalAlignment="Bottom"/>
-            <Label Content="Maintenance 1 [km] or 1 x per a year:" Grid.Row="4" Grid.Column="0" VerticalAlignment="Bottom"/>
-            <Label Content="Maintenance 2 [km] or 1 x per 2 years:" Grid.Row="6" Grid.Column="0" VerticalAlignment="Bottom"/>
-            <Label Content="Maintenance 3 [km] or 1 x per 4 years:" Grid.Row="8" Grid.Column="0" VerticalAlignment="Bottom"/>
+            <Label Content="Maintenance 1 [km]:" Grid.Row="4" Grid.Column="0" VerticalAlignment="Bottom"/>
+            <Label Content="Maintenance 2 [km]:" Grid.Row="6" Grid.Column="0" VerticalAlignment="Bottom"/>
+            <Label Content="Maintenance 3 [km]:" Grid.Row="8" Grid.Column="0" VerticalAlignment="Bottom"/>
             <Label Content="Maintenance 1 price [Kč]:" Grid.Row="4" Grid.Column="1" VerticalAlignment="Bottom"/>
             <Label Content="Maintenance 2 price [Kč]:" Grid.Row="6" Grid.Column="1" VerticalAlignment="Bottom"/>
             <Label Content="Maintenance 3 price [Kč]:" Grid.Row="8" Grid.Column="1" VerticalAlignment="Bottom"/>
@@ -83,6 +84,14 @@
             <TextBox Name="MTBFPriceTextBox" Height="30" Grid.Row="11" Grid.Column="0" HorizontalAlignment="Left" Margin="5,0,0,0" TextWrapping="Wrap" Text="{Binding SelectedCar.MTBF,UpdateSourceTrigger=LostFocus}" Width="200"/>
             <TextBox Name="averageRepairCostsTextBox" Height="30" Grid.Row="11" Grid.Column="1" HorizontalAlignment="Left" Margin="5,0,0,0" TextWrapping="Wrap" Text="{Binding SelectedCar.AverageRepairCosts,UpdateSourceTrigger=LostFocus}" Width="200"/>
             <TextBox Name="fuelConsumptionTextBox" Height="30" Grid.Row="13" Grid.Column="0" HorizontalAlignment="Left" Margin="5,0,0,0" TextWrapping="Wrap" Text="{Binding SelectedCar.FuelConsumption,UpdateSourceTrigger=LostFocus}" Width="200"/>
+
+            <Label Content="Or per [years]:" Grid.Row="4" Grid.Column="2" VerticalAlignment="Bottom"/>
+            <Label Content="Or per [years]:" Grid.Row="6" Grid.Column="2" VerticalAlignment="Bottom"/>
+            <Label Content="Or per [years]:" Grid.Row="8" Grid.Column="2" VerticalAlignment="Bottom"/>
+            
+            <TextBox Name="maintenance1YearsTextBox" Height="30" Grid.Row="5" Grid.Column="2" HorizontalAlignment="Left" Margin="5,0,0,0" TextWrapping="Wrap" Text="{Binding SelectedCar.Maintenance1Years,UpdateSourceTrigger=LostFocus}" Width="40"/>
+            <TextBox Name="maintenance2YearsTextBox" Height="30" Grid.Row="7" Grid.Column="2" HorizontalAlignment="Left" Margin="5,0,0,0" TextWrapping="Wrap" Text="{Binding SelectedCar.Maintenance2Years,UpdateSourceTrigger=LostFocus}" Width="40"/>
+            <TextBox Name="maintenance3yearsTextBox" Height="30" Grid.Row="9" Grid.Column="2" HorizontalAlignment="Left" Margin="5,0,0,0" TextWrapping="Wrap" Text="{Binding SelectedCar.Maintenance3Years,UpdateSourceTrigger=LostFocus}" Width="40"/>
 
             <TextBlock Name="lifeCycleCostTextBlock" Text="{Binding SelectedCar.LifeCycleCost,Mode=TwoWay,NotifyOnTargetUpdated=True,UpdateSourceTrigger=PropertyChanged}" Grid.Row="13" Grid.Column="1"/>
 
