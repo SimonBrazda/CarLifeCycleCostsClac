@@ -7,13 +7,15 @@ using System.Linq;
 
 namespace CarLifeCycleCostsClac
 {
-    public class CarManager : Screen
+    public class CarManager : Screen, ObservableObject
     {
         public BindableCollection<Car> Cars { get; set; }
         //DirectoryInfo currDir = new DirectoryInfo(".");
         private string filePath = "C:\\Users\\Simon\\source\\repos\\CarLifeCycleCostsClac\\CarLifeCycleCostsClac\\CarsData\\CarsData.txt";
 
         private Car selectedCar;
+        private Car comparisonCar1;
+        private Car comparisonCar2;
 
         public Car SelectedCar 
         {
@@ -25,6 +27,25 @@ namespace CarLifeCycleCostsClac
             }
         }
 
+        public Car ComparisonCar1
+        {
+            get { return comparisonCar1; }
+            set
+            {
+                comparisonCar1 = value;
+                NotifyOfPropertyChange(() => comparisonCar1);
+            }
+        }
+
+        public Car ComparisonCar2
+        {
+            get { return comparisonCar2; }
+            set
+            {
+                comparisonCar2 = value;
+                NotifyOfPropertyChange(() => comparisonCar2);
+            }
+        }
         public CarManager()
         {
             
@@ -45,18 +66,20 @@ namespace CarLifeCycleCostsClac
                 words.Add(line.Substring(startIndex, line.Length - startIndex));
                 
   
-                Cars.Add(new Car(words[0], int.Parse(words[1]), float.Parse(words[2]), int.Parse(words[3]), int.Parse(words[4]),
-                    int.Parse(words[5]), int.Parse(words[6]), int.Parse(words[7]), int.Parse(words[8]), int.Parse(words[9]),
-                    int.Parse(words[10]), int.Parse(words[11]), int.Parse(words[12]), int.Parse(words[13]), int.Parse(words[14]),
-                    int.Parse(words[15]), float.Parse(words[16])));
+                Cars.Add(new Car(words[0], words[1], words[2], words[3], words[4],
+                    words[5], words[6], words[7], words[8], words[9],
+                    words[10], words[11], words[12], words[13], words[14],
+                    words[15], words[16]));
             }
-            
+            if(Cars.Any())
+            {
+                SelectedCar = Cars.Last();
+            }
         }
 
         public void Add(string carModel)
         {
-            if (!string.IsNullOrWhiteSpace(carModel))
-            {
+            
                 if (Cars.Count <= 0)
                 {
                     Cars.Add(new Car(carModel));
@@ -76,11 +99,7 @@ namespace CarLifeCycleCostsClac
                         }
                     }
                 }
-            }
-            else
-            {
-                throw new ArgumentException("Car model must not be an empty string or a white-space");
-            }
+           
         }
 
         public void Remove(Car carToRemove)
@@ -100,6 +119,45 @@ namespace CarLifeCycleCostsClac
             }
             
             File.WriteAllLines(filePath, lines);
+        }
+
+        public void updateComparisonCars()
+        {
+            if(ComparisonCar1 != null && ComparisonCar2 != null)
+            {
+                ComparisonCar1 = SelectedCar;
+                ComparisonCar2 = null;
+            }
+            else if(ComparisonCar1 != null && ComparisonCar2 == null)
+            {
+                ComparisonCar2 = SelectedCar;
+            }
+            else
+            {
+                ComparisonCar1 = SelectedCar;
+            }
+        }
+
+        public void compareSelectedCars()
+        {
+            if(ComparisonCar1 == null && ComparisonCar2 == null)
+            {
+                throw new ArgumentException("Please select cars which you want to compare");
+            }
+            else if(ComparisonCar1 == null && ComparisonCar2 != null)
+            {
+                throw new ArgumentException("Please select Car Model 1 to proceed comparison");
+            }
+            else if (ComparisonCar1 == null && ComparisonCar2 != null)
+            {
+                throw new ArgumentException("Please select Car Model 2 to proceed comparison");
+            }
+            else
+            {
+                ComparisonCar1.ComparisonValue = ComparisonCar1.LifeCycleCost - ComparisonCar2.LifeCycleCost;
+                OnPropertyChanged("ComparisonValue");
+                ComparisonCar2.ComparisonValue = ComparisonCar2.LifeCycleCost - ComparisonCar1.LifeCycleCost;
+            }
         }
     }
 }

@@ -50,5 +50,22 @@ namespace CarLifeCycleCostsClac
         {
             carManager.SaveCars();
         }
+
+        private void selectButton_Click(object sender, RoutedEventArgs e)
+        {
+            carManager.updateComparisonCars();
+        }
+
+        private void compareButton_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                carManager.compareSelectedCars();
+            }
+            catch(ArgumentException argEx)
+            {
+                MessageBox.Show(argEx.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
     }
 }
