@@ -7,7 +7,7 @@ using System.Linq;
 
 namespace CarLifeCycleCostsClac
 {
-    public class CarManager : Screen, ObservableObject
+    public class CarManager : Screen
     {
         public BindableCollection<Car> Cars { get; set; }
         //DirectoryInfo currDir = new DirectoryInfo(".");
@@ -33,7 +33,7 @@ namespace CarLifeCycleCostsClac
             set
             {
                 comparisonCar1 = value;
-                NotifyOfPropertyChange(() => comparisonCar1);
+                NotifyOfPropertyChange(() => ComparisonCar1);
             }
         }
 
@@ -43,7 +43,7 @@ namespace CarLifeCycleCostsClac
             set
             {
                 comparisonCar2 = value;
-                NotifyOfPropertyChange(() => comparisonCar2);
+                NotifyOfPropertyChange(() => ComparisonCar2);
             }
         }
         public CarManager()
@@ -148,14 +148,13 @@ namespace CarLifeCycleCostsClac
             {
                 throw new ArgumentException("Please select Car Model 1 to proceed comparison");
             }
-            else if (ComparisonCar1 == null && ComparisonCar2 != null)
+            else if (ComparisonCar1 != null && ComparisonCar2 == null)
             {
                 throw new ArgumentException("Please select Car Model 2 to proceed comparison");
             }
             else
             {
                 ComparisonCar1.ComparisonValue = ComparisonCar1.LifeCycleCost - ComparisonCar2.LifeCycleCost;
-                OnPropertyChanged("ComparisonValue");
                 ComparisonCar2.ComparisonValue = ComparisonCar2.LifeCycleCost - ComparisonCar1.LifeCycleCost;
             }
         }

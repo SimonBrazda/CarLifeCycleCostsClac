@@ -342,7 +342,7 @@ namespace CarLifeCycleCostsClac
             set
             {
                 comparisonValue = value;
-                OnPropertyChanged("ComparisonValue;");
+                OnPropertyChanged("ComparisonValue");
             }
         }
 
