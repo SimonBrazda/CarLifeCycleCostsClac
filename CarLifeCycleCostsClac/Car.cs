@@ -386,7 +386,16 @@ namespace CarLifeCycleCostsClac
                 MessageBox.Show(overflowEx.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
             updateLifeCycleCost();
-            }
+        }
+        public Car getDeepCopy()
+        {
+            return new Car(this.carModel, this.expectedRangeOfOperation.ToString(), this.fuelPrice.ToString(),
+                this.purchasePrice.ToString(), this.technicalLife.ToString(), this.maintenance1.ToString(),
+                this.maintenance2.ToString(), this.maintenance3.ToString(), this.maintenance1Price.ToString(),
+                this.maintenance2Price.ToString(), maintenance3Price.ToString(), this.maintenance1Years.ToString(),
+                this.maintenance2Years.ToString(), this.maintenance3Years.ToString(), this.mTBF.ToString(),
+                this.averageRepairCosts.ToString(), this.fuelConsumption.ToString());
+        }
         public void updateLifeCycleCost()
         {
             int preventiveMaintenance = 0;
@@ -451,5 +460,14 @@ namespace CarLifeCycleCostsClac
             LifeCycleCost = purchasePrice + (fuelConsumption / 100 * fuelPrice * technicalLife) + preventiveMaintenance + (technicalLife / mTBF * averageRepairCosts);
             ComparativeCosts = LifeCycleCost / TechnicalLife;
         }
+        public static bool operator ==(Car car)
+        {
+            return true;
+        }
+        public static bool operator !=(Car car)
+        {
+
+        }
     }
+    
 }

@@ -125,16 +125,25 @@ namespace CarLifeCycleCostsClac
         {
             if(ComparisonCar1 != null && ComparisonCar2 != null)
             {
-                ComparisonCar1 = SelectedCar;
+                ComparisonCar1 = null;
                 ComparisonCar2 = null;
+                ComparisonCar1 = SelectedCar.getDeepCopy();
+               
             }
             else if(ComparisonCar1 != null && ComparisonCar2 == null)
             {
-                ComparisonCar2 = SelectedCar;
+                if(ComparisonCar1 == SelectedCar)
+                {
+                    throw new ArgumentException("Can not compare same Car Models.\nPlease select different one.");
+                }
+                else
+                {
+                    ComparisonCar2 = SelectedCar.getDeepCopy();
+                }
             }
             else
             {
-                ComparisonCar1 = SelectedCar;
+                ComparisonCar1 = SelectedCar.getDeepCopy();
             }
         }
 
@@ -154,8 +163,8 @@ namespace CarLifeCycleCostsClac
             }
             else
             {
-                ComparisonCar1.ComparisonValue = ComparisonCar1.LifeCycleCost - ComparisonCar2.LifeCycleCost;
-                ComparisonCar2.ComparisonValue = ComparisonCar2.LifeCycleCost - ComparisonCar1.LifeCycleCost;
+                ComparisonCar1.ComparisonValue = ComparisonCar2.LifeCycleCost - ComparisonCar1.LifeCycleCost;
+                ComparisonCar2.ComparisonValue = ComparisonCar1.LifeCycleCost - ComparisonCar2.LifeCycleCost;
             }
         }
     }
