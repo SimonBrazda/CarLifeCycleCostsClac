@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:CarLifeCycleCostsClac"
         mc:Ignorable="d"
-        Title="CarLifeCycleCostsCalc v.0.1" Height="800" Width="800">
+        Title="CarLifeCycleCostsCalc v.0.1" Height="670" Width="800" MinHeight="670" MinWidth="800" WindowStartupLocation="CenterScreen">
     <Grid Margin="10">
         <Grid.RowDefinitions>
             <RowDefinition Height="440"/>
@@ -47,8 +47,8 @@
                 <RowDefinition Height="30"/>
                 <RowDefinition Height="30"/>
                 <RowDefinition Height="30"/>
-                <RowDefinition Height="30"/>
-                <RowDefinition Height="30"/>
+                <RowDefinition Height="40"/>
+                <RowDefinition Height="40"/>
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
@@ -83,7 +83,7 @@
             <TextBox Name="maintenance3PriceTextBox" Height="30" Grid.Row="9" Grid.Column="1" HorizontalAlignment="Left" Margin="5,0,0,0" TextWrapping="Wrap" Text="{Binding SelectedCar.Maintenance3Price,UpdateSourceTrigger=LostFocus}" Width="200"/>
             <TextBox Name="MTBFPriceTextBox" Height="30" Grid.Row="11" Grid.Column="0" HorizontalAlignment="Left" Margin="5,0,0,0" TextWrapping="Wrap" Text="{Binding SelectedCar.MTBF,UpdateSourceTrigger=LostFocus}" Width="200"/>
             <TextBox Name="averageRepairCostsTextBox" Height="30" Grid.Row="11" Grid.Column="1" HorizontalAlignment="Left" Margin="5,0,0,0" TextWrapping="Wrap" Text="{Binding SelectedCar.AverageRepairCosts,UpdateSourceTrigger=LostFocus}" Width="200"/>
-            <TextBox Name="fuelConsumptionTextBox" Height="30" Grid.Row="13" Grid.Column="0" HorizontalAlignment="Left" Margin="5,0,0,0" TextWrapping="Wrap" Text="{Binding SelectedCar.FuelConsumption,UpdateSourceTrigger=LostFocus}" Width="200"/>
+            <TextBox Name="fuelConsumptionTextBox" Height="30" Grid.Row="13" Grid.Column="0" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="5,0,0,0" TextWrapping="Wrap" Text="{Binding SelectedCar.FuelConsumption,UpdateSourceTrigger=LostFocus}" Width="200"/>
 
             <Label Content="Or per [years]:" Grid.Row="4" Grid.Column="2" VerticalAlignment="Bottom"/>
             <Label Content="Or per [years]:" Grid.Row="6" Grid.Column="2" VerticalAlignment="Bottom"/>
@@ -94,7 +94,15 @@
             <TextBox Name="maintenance3yearsTextBox" Height="30" Grid.Row="9" Grid.Column="2" HorizontalAlignment="Left" Margin="5,0,0,0" TextWrapping="Wrap" Text="{Binding SelectedCar.Maintenance3Years,UpdateSourceTrigger=LostFocus}" Width="40"/>
 
             
-
+            <Label Content="Total Life Cycle Cost [Kč]:" Grid.Row="12" Grid.Column="1" FontSize="12" VerticalAlignment="Bottom"/>
+            <Label Content="Specific Comparative Costs [Kč/km]:" Grid.Row="13" Grid.Column="1" FontSize="12" VerticalAlignment="Bottom"/>
+            
+                <Border Grid.Row="12" Grid.Column="2" BorderThickness="1" BorderBrush="Black" Background="Yellow" VerticalAlignment="Bottom" Height="25" Margin="0,0,20,0">
+                <TextBlock Name="lifeCycleCostTextBlock" Text="{Binding SelectedCar.LifeCycleCost,Mode=TwoWay,NotifyOnTargetUpdated=True,UpdateSourceTrigger=PropertyChanged}" FontSize="14" Grid.Row="12" Grid.Column="2" Height="16" Margin="2,2,2,4" VerticalAlignment="Bottom"/>
+                </Border>
+                <Border Grid.Row="13" Grid.Column="2" BorderThickness="1" BorderBrush="Black" Background="Yellow" VerticalAlignment="Bottom" Height="25" Margin="0,0,20,0">
+                    <TextBlock Name="comparativeCostsTextBlock" Foreground="ForestGreen" Text="{Binding SelectedCar.ComparativeCosts,Mode=TwoWay,NotifyOnTargetUpdated=True,UpdateSourceTrigger=PropertyChanged}" FontSize="14" Grid.Row="13" Grid.Column="2" Height="16" Margin="2,2,2,4" VerticalAlignment="Bottom"/>
+                </Border>
             
         </Grid>
         <Grid Grid.Row="1" Grid.Column="2">
@@ -113,20 +121,18 @@
                 <ColumnDefinition Width="150"/>
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
-            <Label Content="Total Life Cycle Cost [Kč]:" Grid.Row="0" Grid.Column="0" VerticalAlignment="Center"/>
-            <Label Content="Specific Comparative Costs [Kč/km]:" Grid.Row="1" Grid.Column="0" VerticalAlignment="Center"/>
+            
             <Label Content="Compare Life Cycsle Costs [Kč]:" Grid.Row="3" Grid.Column="0" VerticalAlignment="Center"/>
-            <Label Content="Car Model 1:" Grid.Row="2" Grid.Column="1" VerticalAlignment="Center"/>
-            <Label Content="Car Model 2:" Grid.Row="2" Grid.Column="2" VerticalAlignment="Center"/>
+            <Label Content="Car Model 1:" Grid.Row="1" Grid.Column="1" VerticalAlignment="Center"/>
+            <Label Content="Car Model 2:" Grid.Row="1" Grid.Column="2" VerticalAlignment="Center"/>
 
-            <TextBlock Name="lifeCycleCostTextBlock" Text="{Binding SelectedCar.LifeCycleCost,Mode=TwoWay,NotifyOnTargetUpdated=True,UpdateSourceTrigger=PropertyChanged}" Grid.Row="0" Grid.Column="1" VerticalAlignment="Center"/>
-            <TextBlock Name="comparativeCostsTextBlock" Foreground="ForestGreen" Text="{Binding SelectedCar.ComparativeCosts,Mode=TwoWay,NotifyOnTargetUpdated=True,UpdateSourceTrigger=PropertyChanged}" Grid.Row="1" Grid.Column="1" VerticalAlignment="Center"/>
-            <TextBlock Name="carModel1Block" Text="{Binding ComparisonCar1.CarModel,Mode=TwoWay,NotifyOnTargetUpdated=True,UpdateSourceTrigger=PropertyChanged}" Grid.Row="3" Grid.Column="1" Margin="5,0,0,0" VerticalAlignment="Center"/>
-            <TextBlock Name="carModel2TextBlock" Text="{Binding ComparisonCar2.CarModel,Mode=TwoWay,NotifyOnTargetUpdated=True,UpdateSourceTrigger=PropertyChanged}" Grid.Row="3" Grid.Column="2" Margin="5,0,0,0" VerticalAlignment="Center"/>
-            <TextBlock Name="resultCarComparison11Block" Text="{Binding ComparisonCar1.ComparisonValue,Mode=TwoWay,NotifyOnTargetUpdated=True,UpdateSourceTrigger=PropertyChanged,NotifyOnSourceUpdated=True}" Grid.Row="4" Grid.Column="1" Margin="5,0,0,0" VerticalAlignment="Center"/>
-            <TextBlock Name="resultCarComparison2TextBlock" Text="{Binding ComparisonCar2.ComparisonValue,Mode=TwoWay,NotifyOnTargetUpdated=True,UpdateSourceTrigger=PropertyChanged,NotifyOnSourceUpdated=True}" Grid.Row="4" Grid.Column="2" Margin="5,0,0,0" VerticalAlignment="Center"/>
-            <Button Name="compareButton" Content="Compare" Grid.Row="3" Grid.Column="3" Margin="0,0,10,5" HorizontalAlignment="Right"  Width="120" Click="compareButton_Click"/>
-            <Button Name="saveButton" Content="Save all and Quit" Grid.Row="4" Grid.Column="3" HorizontalAlignment="Right" VerticalAlignment="Stretch" Width="120" Margin="0,5,10,0" Click="saveButton_Click"/>
+            
+            <TextBlock Name="carModel1Block" Text="{Binding ComparisonCar1.CarModel,Mode=TwoWay,NotifyOnTargetUpdated=True,UpdateSourceTrigger=PropertyChanged}" Grid.Row="2" Grid.Column="1" Margin="5,0,0,0" VerticalAlignment="Center"/>
+            <TextBlock Name="carModel2TextBlock" Text="{Binding ComparisonCar2.CarModel,Mode=TwoWay,NotifyOnTargetUpdated=True,UpdateSourceTrigger=PropertyChanged}" Grid.Row="2" Grid.Column="2" Margin="5,0,0,0" VerticalAlignment="Center"/>
+            <TextBlock Name="resultCarComparison11Block" Text="{Binding ComparisonCar1.ComparisonValue,Mode=TwoWay,NotifyOnTargetUpdated=True,UpdateSourceTrigger=PropertyChanged,NotifyOnSourceUpdated=True}"  Foreground="{Binding ComparisonCar1.Color}" Grid.Row="3" Grid.Column="1" Margin="5,0,0,0" VerticalAlignment="Center"/>
+            <TextBlock Name="resultCarComparison2TextBlock" Text="{Binding ComparisonCar2.ComparisonValue,Mode=TwoWay,NotifyOnTargetUpdated=True,UpdateSourceTrigger=PropertyChanged,NotifyOnSourceUpdated=True}" Foreground="{Binding ComparisonCar2.Color}" Grid.Row="3" Grid.Column="2" Margin="5,0,0,0" VerticalAlignment="Center"/>
+            <Button Name="compareButton" Content="Compare" Grid.Row="2" Grid.Column="3" Margin="0,0,10,0" HorizontalAlignment="Right" Width="140" Click="compareButton_Click"/>
+            <Button Name="quitButton" Content="Quit" Grid.Row="4" Grid.Column="3" HorizontalAlignment="Right" VerticalAlignment="Stretch" Margin="0,0,10,0" Width="140" Click="quitButton_Click"/>
         </Grid>
         
     </Grid>

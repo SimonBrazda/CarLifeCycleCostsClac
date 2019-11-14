@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Security;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
@@ -43,18 +45,26 @@ namespace CarLifeCycleCostsClac
 
         private void removeButton_Click(object sender, RoutedEventArgs e)
         {
-            if(carListBox != null)
+            try
+            {
                 carManager.Remove(carManager.SelectedCar);
-        }
-
-        private void saveButton_Click(object sender, RoutedEventArgs e)
-        {
-            carManager.SaveCars();
+            }
+            catch(ArgumentNullException argNullEx)
+            {
+                MessageBox.Show(argNullEx.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
         }
 
         private void selectButton_Click(object sender, RoutedEventArgs e)
         {
-            carManager.updateComparisonCars();
+            try
+            {
+                carManager.updateComparisonCars();
+            }
+            catch(ArgumentException argEx)
+            {
+                MessageBox.Show(argEx.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
         }
 
         private void compareButton_Click(object sender, RoutedEventArgs e)
@@ -72,6 +82,55 @@ namespace CarLifeCycleCostsClac
         private void expRangeOfOperation_previewTextInput(object sender, TextCompositionEventArgs e)
         {
             e.Handled = new Regex("[^0-9]").IsMatch(e.Text);
+        }
+
+        private void quitButton_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                MessageBoxResult messBoxResult = MessageBox.Show("Do you wish to save all changes?", "Quit", MessageBoxButton.YesNoCancel);
+                switch (messBoxResult)
+                {
+                    case MessageBoxResult.Yes:
+                        carManager.SaveCars();
+                        MessageBox.Show("All changes successfully saved.", "Data saved");
+                        Application.Current.Shutdown();
+                        break;
+                    case MessageBoxResult.No:
+                        Application.Current.Shutdown();
+                        break;
+                    default:
+                        break;
+                }
+            }
+            catch (ArgumentException argEx)
+            {
+                MessageBox.Show(argEx.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+            catch (PathTooLongException pathLongEx)
+            {
+                MessageBox.Show(pathLongEx.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+            catch (DirectoryNotFoundException dirNotFound)
+            {
+                MessageBox.Show(dirNotFound.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+            catch (IOException IOEx)
+            {
+                MessageBox.Show(IOEx.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+            catch (UnauthorizedAccessException unAuthorisedEx)
+            {
+                MessageBox.Show(unAuthorisedEx.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+            catch (NotSupportedException notSuporptedEx)
+            {
+                MessageBox.Show(notSuporptedEx.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+            catch (SecurityException securityEx)
+            {
+                MessageBox.Show(securityEx.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
         }
     }
 }

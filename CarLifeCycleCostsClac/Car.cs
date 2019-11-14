@@ -28,6 +28,7 @@ namespace CarLifeCycleCostsClac
         private float lifeCycleCost;
         private float comparativeCosts;
         private float comparisonValue;
+        private string color;
         public string CarModel
         {
             get { return carModel; }
@@ -75,7 +76,7 @@ namespace CarLifeCycleCostsClac
             }
             set
             {
-                fuelPrice = value;
+                fuelPrice = (float)Math.Round(value, 2);
                 updateLifeCycleCost();
                 OnPropertyChanged("FuelPrice");
             }
@@ -313,7 +314,7 @@ namespace CarLifeCycleCostsClac
             }
             set
             {
-                fuelConsumption = value;
+                fuelConsumption = (float)Math.Round(value, 2);
                 updateLifeCycleCost();
                 OnPropertyChanged("FuelConsumption");
             }
@@ -345,13 +346,21 @@ namespace CarLifeCycleCostsClac
                 OnPropertyChanged("ComparisonValue");
             }
         }
-
+        public string Color
+        {
+            get { return color; }
+            set
+            {
+                color = value;
+                OnPropertyChanged("Color");
+            }
+        }
 
         public Car(string carModel, string expectedRangeOfOperation = "15000", string fuelPrice = "30.0", string purchasePrice = "340000",
             string technicalLife = "250000", string maintenance1 = "25000", string maintenance2 = "50000", string maintenance3 = "100000",
             string maintenance1Price = "8000", string maintenance2Price = "12000", string maintenance3Price = "16000", string maintenance1Years = "1",
             string maintenance2Years = "2", string maintenance3Years = "4", string mTBF = "65000", string averageRepairCosts = "25000",
-            string fuelConsumption = "7.6")
+            string fuelConsumption = "7.6", string color = "Black")
         {
             try
             {
@@ -372,6 +381,7 @@ namespace CarLifeCycleCostsClac
                 this.mTBF = int.Parse(mTBF);
                 this.averageRepairCosts = int.Parse(averageRepairCosts);
                 this.fuelConsumption = float.Parse(fuelConsumption);
+                this.color = color;
             }
             catch(ArgumentException argEx)
             {
@@ -448,8 +458,8 @@ namespace CarLifeCycleCostsClac
                     }
                 }
             }
-            LifeCycleCost = purchasePrice + (fuelConsumption / 100 * fuelPrice * technicalLife) + preventiveMaintenance + (technicalLife / mTBF * averageRepairCosts);
-            ComparativeCosts = LifeCycleCost / TechnicalLife;
+            LifeCycleCost = (float)Math.Round(purchasePrice + (fuelConsumption / 100 * fuelPrice * technicalLife) + preventiveMaintenance + (technicalLife / mTBF * averageRepairCosts), 2);
+            ComparativeCosts = (float)Math.Round(LifeCycleCost / TechnicalLife, 2);
         }
     }
 }

@@ -4,14 +4,17 @@ using System.Collections.Generic;
 using System.Text;
 using System.IO;
 using System.Linq;
+using System.Windows;
+using System.Security;
 
 namespace CarLifeCycleCostsClac
 {
     public class CarManager : Screen
     {
         public BindableCollection<Car> Cars { get; set; }
-        //DirectoryInfo currDir = new DirectoryInfo(".");
-        private string filePath = "C:\\Users\\Simon\\source\\repos\\CarLifeCycleCostsClac\\CarLifeCycleCostsClac\\CarsData\\CarsData.txt";
+        
+        string path = Path.Combine(Directory.GetCurrentDirectory(),"CarsData\\CarsData.csv");
+        
 
         private Car selectedCar;
         private Car comparisonCar1;
@@ -48,32 +51,65 @@ namespace CarLifeCycleCostsClac
         }
         public CarManager()
         {
-            
-            List<string> lines = File.ReadAllLines(filePath).ToList();
-            Cars = new BindableCollection<Car>();
-            
-            foreach(string line in lines)
+            try
             {
-                int startIndex = 0;
-                int lastIndex = line.IndexOf(',');
-                List<string> words = new List<string>();
-                while (lastIndex < line.Length && lastIndex != -1)
+                List<string> lines = File.ReadAllLines(path).ToList();
+                Cars = new BindableCollection<Car>();
+
+                foreach (string line in lines)
                 {
-                    words.Add(line.Substring(startIndex, lastIndex - startIndex));
-                    startIndex = lastIndex + 1;
-                    lastIndex = line.IndexOf(',', startIndex);
+                    /*
+                    int startIndex = 0;
+                    int lastIndex = line.IndexOf(',');
+                    List<string> words = new List<string>();
+                    while (lastIndex < line.Length && lastIndex != -1)
+                    {
+                        words.Add(line.Substring(startIndex, lastIndex - startIndex));
+                        startIndex = lastIndex + 1;
+                        lastIndex = line.IndexOf(',', startIndex);
+                    }
+                    words.Add(line.Substring(startIndex, line.Length - startIndex));
+                    */
+
+                    List<string> words = new List<string>(line.Split(','));
+
+                    Cars.Add(new Car(words[0], words[1], words[2], words[3], words[4],
+                        words[5], words[6], words[7], words[8], words[9],
+                        words[10], words[11], words[12], words[13], words[14],
+                        words[15], words[16]));
                 }
-                words.Add(line.Substring(startIndex, line.Length - startIndex));
-                
-  
-                Cars.Add(new Car(words[0], words[1], words[2], words[3], words[4],
-                    words[5], words[6], words[7], words[8], words[9],
-                    words[10], words[11], words[12], words[13], words[14],
-                    words[15], words[16]));
+                if (Cars.Any())
+                {
+                    SelectedCar = Cars.Last();
+                }
             }
-            if(Cars.Any())
+            catch (ArgumentException argEx)
             {
-                SelectedCar = Cars.Last();
+                MessageBox.Show(argEx.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+            catch (PathTooLongException pathLongEx)
+            {
+                MessageBox.Show(pathLongEx.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+            catch (DirectoryNotFoundException dirNotFound)
+            {
+                MessageBox.Show(dirNotFound.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+            catch (IOException IOEx)
+            {
+                MessageBox.Show(IOEx.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+            catch (UnauthorizedAccessException unAuthorisedEx)
+            {
+                MessageBox.Show(unAuthorisedEx.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+            catch (NotSupportedException notSuporptedEx)
+            {
+                MessageBox.Show(notSuporptedEx.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+            catch (SecurityException securityEx)
+            {
+                MessageBox.Show(securityEx.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
 
@@ -104,7 +140,18 @@ namespace CarLifeCycleCostsClac
 
         public void Remove(Car carToRemove)
         {
-            Cars.Remove(carToRemove);
+            if (carToRemove != null)
+            {
+                Cars.Remove(carToRemove);
+                if (Cars.Any())
+                    SelectedCar = Cars.Last();
+                else
+                    SelectedCar = null;
+            }
+            else
+            {
+                throw new ArgumentNullException("There are no Car Models to be removed.");
+            }
         }
 
         public void SaveCars()
@@ -118,7 +165,7 @@ namespace CarLifeCycleCostsClac
                     "," + car.AverageRepairCosts + "," + car.FuelConsumption);
             }
             
-            File.WriteAllLines(filePath, lines);
+            File.WriteAllLines(path, lines);
         }
 
         public void updateComparisonCars()
@@ -126,15 +173,25 @@ namespace CarLifeCycleCostsClac
             if(ComparisonCar1 != null && ComparisonCar2 != null)
             {
                 ComparisonCar1 = SelectedCar;
+                ComparisonCar1.ComparisonValue = 0;
+                ComparisonCar1.Color = "Black";
                 ComparisonCar2 = null;
             }
             else if(ComparisonCar1 != null && ComparisonCar2 == null)
             {
+                if (ComparisonCar1 == SelectedCar)
+                {
+                    throw new ArgumentException("Can not compare same Car Models.\nPlease select different one.");
+                }
                 ComparisonCar2 = SelectedCar;
+                ComparisonCar2.ComparisonValue = 0;
+                ComparisonCar2.Color = "Black";
             }
             else
             {
                 ComparisonCar1 = SelectedCar;
+                ComparisonCar1.ComparisonValue = 0;
+                ComparisonCar1.Color = "Black";
             }
         }
 
@@ -154,8 +211,18 @@ namespace CarLifeCycleCostsClac
             }
             else
             {
-                ComparisonCar1.ComparisonValue = ComparisonCar1.LifeCycleCost - ComparisonCar2.LifeCycleCost;
-                ComparisonCar2.ComparisonValue = ComparisonCar2.LifeCycleCost - ComparisonCar1.LifeCycleCost;
+                ComparisonCar1.ComparisonValue = (float)Math.Round(ComparisonCar1.LifeCycleCost - ComparisonCar2.LifeCycleCost, 2);
+                ComparisonCar2.ComparisonValue = (float)Math.Round(ComparisonCar2.LifeCycleCost - ComparisonCar1.LifeCycleCost, 2);
+                if (ComparisonCar1.ComparisonValue > ComparisonCar2.ComparisonValue)
+                {
+                    ComparisonCar1.Color = "Green";
+                    ComparisonCar2.Color = "Red";
+                }
+                else
+                {
+                    ComparisonCar2.Color = "Green";
+                    ComparisonCar1.Color = "Red";
+                }
             }
         }
     }
