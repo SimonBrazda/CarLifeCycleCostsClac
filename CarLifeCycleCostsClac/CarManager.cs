@@ -53,8 +53,8 @@ namespace CarLifeCycleCostsClac
         {
             try
             {
-                List<string> lines = File.ReadAllLines(path).ToList();
                 Cars = new BindableCollection<Car>();
+                List<string> lines = File.ReadAllLines(path).ToList();
 
                 foreach (string line in lines)
                 {

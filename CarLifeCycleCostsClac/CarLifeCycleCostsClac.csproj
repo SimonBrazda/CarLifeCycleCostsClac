@@ -4,10 +4,14 @@
     <OutputType>WinExe</OutputType>
     <TargetFramework>netcoreapp3.0</TargetFramework>
     <UseWPF>true</UseWPF>
+    <StartupObject>CarLifeCycleCostsClac.App</StartupObject>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <ApplicationIcon>favicon.ico</ApplicationIcon>
   </PropertyGroup>
 
   <ItemGroup>
     <PackageReference Include="Caliburn.Micro.Core" Version="3.2.0" />
+    <PackageReference Include="squirrel.windows" Version="1.9.1" />
   </ItemGroup>
 
 </Project>

@@ -409,7 +409,7 @@ namespace CarLifeCycleCostsClac
             maintenancePrices.Sort();
             maintenancePrices.Reverse();
 
-            if (expectedRangeOfOperation < maintenances.Where(x => x > 0).Min()/* && (maintenance1Years > 0 || maintenance2Years > 0 || maintenance3Years > 0)*/)
+            if (expectedRangeOfOperation < maintenances.Where(x => x > 0).Min())
             {
                 List<int> maintenanceYears = new List<int> { maintenance1Years, maintenance2Years, maintenance3Years };
                 maintenanceYears.Sort();

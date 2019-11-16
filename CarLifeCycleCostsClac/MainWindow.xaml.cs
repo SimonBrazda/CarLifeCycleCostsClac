@@ -79,11 +79,6 @@ namespace CarLifeCycleCostsClac
             }
         }
 
-        private void expRangeOfOperation_previewTextInput(object sender, TextCompositionEventArgs e)
-        {
-            e.Handled = new Regex("[^0-9]").IsMatch(e.Text);
-        }
-
         private void quitButton_Click(object sender, RoutedEventArgs e)
         {
             try
@@ -131,6 +126,88 @@ namespace CarLifeCycleCostsClac
             {
                 MessageBox.Show(securityEx.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
+
+            
+        }
+
+        private void expRangeOfOperation_previewTextInput(object sender, TextCompositionEventArgs e)
+        {
+            e.Handled = new Regex("[^0-9]").IsMatch(e.Text);
+        }
+
+        private void fuelPrice_previewTextInput(object sender, TextCompositionEventArgs e)
+        {
+            e.Handled = new Regex("[^0-9^.]").IsMatch(e.Text);
+        }
+
+        private void purchasePrice_previewTextInput(object sender, TextCompositionEventArgs e)
+        {
+            e.Handled = new Regex("[^0-9]").IsMatch(e.Text);
+        }
+
+        private void technicalLife_previewTextInput(object sender, TextCompositionEventArgs e)
+        {
+            e.Handled = new Regex("[^0-9]").IsMatch(e.Text);
+        }
+
+        private void maintenance1_previewTextInput(object sender, TextCompositionEventArgs e)
+        {
+            e.Handled = new Regex("[^0-9]").IsMatch(e.Text);
+        }
+
+        private void maintenance2_previewTextInput(object sender, TextCompositionEventArgs e)
+        {
+            e.Handled = new Regex("[^0-9]").IsMatch(e.Text);
+        }
+
+        private void maintenance3_previewTextInput(object sender, TextCompositionEventArgs e)
+        {
+            e.Handled = new Regex("[^0-9]").IsMatch(e.Text);
+        }
+
+        private void maintenance1Price_previewTextInput(object sender, TextCompositionEventArgs e)
+        {
+            e.Handled = new Regex("[^0-9]").IsMatch(e.Text);
+        }
+
+        private void maintenance2Price_previewTextInput(object sender, TextCompositionEventArgs e)
+        {
+            e.Handled = new Regex("[^0-9]").IsMatch(e.Text);
+        }
+
+        private void maintenance3Price_previewTextInput(object sender, TextCompositionEventArgs e)
+        {
+            e.Handled = new Regex("[^0-9]").IsMatch(e.Text);
+        }
+
+        private void MTBF_previewTextInput(object sender, TextCompositionEventArgs e)
+        {
+            e.Handled = new Regex("[^0-9]").IsMatch(e.Text);
+        }
+
+        private void averageRepairCosts_previewTextInput(object sender, TextCompositionEventArgs e)
+        {
+            e.Handled = new Regex("[^0-9]").IsMatch(e.Text);
+        }
+
+        private void fuelConsumption_previewTextInput(object sender, TextCompositionEventArgs e)
+        {
+            e.Handled = new Regex("[^0-9^.]").IsMatch(e.Text);
+        }
+
+        private void maintenance1Years_previewTextInput(object sender, TextCompositionEventArgs e)
+        {
+            e.Handled = new Regex("[^0-9]").IsMatch(e.Text);
+        }
+
+        private void maintenance2Years_previewTextInput(object sender, TextCompositionEventArgs e)
+        {
+            e.Handled = new Regex("[^0-9]").IsMatch(e.Text);
+        }
+
+        private void maintenance3Years_previewTextInput(object sender, TextCompositionEventArgs e)
+        {
+            e.Handled = new Regex("[^0-9]").IsMatch(e.Text);
         }
     }
 }
