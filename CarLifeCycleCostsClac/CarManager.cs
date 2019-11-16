@@ -82,6 +82,7 @@ namespace CarLifeCycleCostsClac
                 {
                     SelectedCar = Cars.Last();
                 }
+                MessageBox.Show("Data seccessfully loaded.", "Loaded", MessageBoxButton.OK, MessageBoxImage.Information);
             }
             catch (ArgumentException argEx)
             {
@@ -119,6 +120,7 @@ namespace CarLifeCycleCostsClac
                 if (Cars.Count <= 0)
                 {
                     Cars.Add(new Car(carModel));
+                    SelectedCar = Cars.Last();
                 }
                 else
                 {
