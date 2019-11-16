@@ -9,25 +9,25 @@ namespace CarLifeCycleCostsClac
     public class Car : ObservableObject
     {
         private string carModel;
-        private int expectedRangeOfOperation;
-        private float fuelPrice;
-        private int purchasePrice;
-        private int technicalLife;
-        private int maintenance1;
-        private int maintenance2;
-        private int maintenance3;
-        private int maintenance1Price;
-        private int maintenance2Price;
-        private int maintenance3Price;
-        private int maintenance1Years;
-        private int maintenance2Years;
-        private int maintenance3Years;
-        private int mTBF;
-        private int averageRepairCosts;
-        private float fuelConsumption;
-        private float lifeCycleCost;
-        private float comparativeCosts;
-        private float comparisonValue;
+        private ulong expectedRangeOfOperation;
+        private double fuelPrice;
+        private ulong purchasePrice;
+        private ulong technicalLife;
+        private ulong maintenance1;
+        private ulong maintenance2;
+        private ulong maintenance3;
+        private ulong maintenance1Price;
+        private ulong maintenance2Price;
+        private ulong maintenance3Price;
+        private ulong maintenance1Years;
+        private ulong maintenance2Years;
+        private ulong maintenance3Years;
+        private ulong mTBF;
+        private ulong averageRepairCosts;
+        private double fuelConsumption;
+        private double lifeCycleCost;
+        private double comparativeCosts;
+        private double comparisonValue;
         private string color;
         public string CarModel
         {
@@ -46,49 +46,44 @@ namespace CarLifeCycleCostsClac
                     
             }
         }
-        public int ExpectedRangeOfOperation
+        public ulong ExpectedRangeOfOperation
         {
             get
             {
-                if (string.IsNullOrEmpty(expectedRangeOfOperation.ToString()))
-                {
-                    return 0;
-                }
                 return expectedRangeOfOperation;
             }
             set
             {
-
-                expectedRangeOfOperation = value;
+                if(value < 100)
+                {
+                    expectedRangeOfOperation = 100;
+                }
+                else
+                {
+                    expectedRangeOfOperation = value;
+                }
+                
                 updateLifeCycleCost();
                 OnPropertyChanged("ExpectedRangeOfOperation");
             }
         }
-        public float FuelPrice
+        public double FuelPrice
         {
             get
             {
-                if (string.IsNullOrEmpty(fuelPrice.ToString()))
-                {
-                    return 0.0f;
-                }
                 return fuelPrice;
             }
             set
             {
-                fuelPrice = (float)Math.Round(value, 2);
+                fuelPrice = (double)Math.Round(value, 2);
                 updateLifeCycleCost();
                 OnPropertyChanged("FuelPrice");
             }
         }
-        public int PurchasePrice
+        public ulong PurchasePrice
         {
             get
             {
-                if (string.IsNullOrEmpty(purchasePrice.ToString()))
-                {
-                    return 0;
-                }
                 return purchasePrice;
             }
             set
@@ -98,31 +93,30 @@ namespace CarLifeCycleCostsClac
                 OnPropertyChanged("PurchasePrice");
             }
         }
-        public int TechnicalLife
+        public ulong TechnicalLife
         {
             get
             {
-                if (string.IsNullOrEmpty(technicalLife.ToString()))
-                {
-                    return 0;
-                }
                 return technicalLife;
             }
             set
             {
-                technicalLife = value;
+                if(value < 1)
+                {
+                    technicalLife = 1;
+                }
+                else
+                {
+                    technicalLife = value;
+                }
                 updateLifeCycleCost();
                 OnPropertyChanged("TechnicalLife");
             }
         }
-        public int Maintenance1
+        public ulong Maintenance1
         {
             get
             {
-                if (string.IsNullOrEmpty(maintenance1.ToString()))
-                {
-                    return 0;
-                }
                 return maintenance1;
             }
             set
@@ -132,7 +126,7 @@ namespace CarLifeCycleCostsClac
                 OnPropertyChanged("Maintenance1");
             }
         }
-        public int Maintenance2
+        public ulong Maintenance2
         {
             get
             {
@@ -149,7 +143,7 @@ namespace CarLifeCycleCostsClac
                 OnPropertyChanged("Maintenance2");
             }
         }
-        public int Maintenance3
+        public ulong Maintenance3
         {
             get
             {
@@ -166,7 +160,7 @@ namespace CarLifeCycleCostsClac
                 OnPropertyChanged("Maintenance3");
             }
         }
-        public int Maintenance1Price
+        public ulong Maintenance1Price
         {
             get
             {
@@ -179,11 +173,16 @@ namespace CarLifeCycleCostsClac
             set
             {
                 maintenance1Price = value;
+                if (value <= 0)
+                {
+                    Maintenance1 = 0;
+                    Maintenance1Years = 0;
+                }
                 updateLifeCycleCost();
                 OnPropertyChanged("Maintenance1Price");
             }
         }
-        public int Maintenance2Price
+        public ulong Maintenance2Price
         {
             get
             {
@@ -196,11 +195,16 @@ namespace CarLifeCycleCostsClac
             set
             {
                 maintenance2Price = value;
+                if (value <= 0)
+                {
+                    Maintenance2 = 0;
+                    Maintenance2Years = 0;
+                }
                 updateLifeCycleCost();
                 OnPropertyChanged("Maintenance2Price");
             }
         }
-        public int Maintenance3Price
+        public ulong Maintenance3Price
         {
             get
             {
@@ -213,11 +217,16 @@ namespace CarLifeCycleCostsClac
             set
             {
                 maintenance3Price = value;
+                if(value <= 0)
+                {
+                    Maintenance3 = 0;
+                    Maintenance3Years = 0;
+                }
                 updateLifeCycleCost();
                 OnPropertyChanged("Maintenance3Price");
             }
         }
-        public int Maintenance1Years
+        public ulong Maintenance1Years
         {
             get
             {
@@ -234,7 +243,7 @@ namespace CarLifeCycleCostsClac
                 OnPropertyChanged("Maintenance1Years");
             }
         }
-        public int Maintenance2Years
+        public ulong Maintenance2Years
         {
             get
             {
@@ -251,7 +260,7 @@ namespace CarLifeCycleCostsClac
                 OnPropertyChanged("Maintenance2Years");
             }
         }
-        public int Maintenance3Years
+        public ulong Maintenance3Years
         {
             get
             {
@@ -268,7 +277,7 @@ namespace CarLifeCycleCostsClac
                 OnPropertyChanged("Maintenance3Years");
             }
         }
-        public int MTBF
+        public ulong MTBF
         {
             get
             {
@@ -285,7 +294,7 @@ namespace CarLifeCycleCostsClac
                 OnPropertyChanged("MTBF");
             }
         }
-        public int AverageRepairCosts
+        public ulong AverageRepairCosts
         {
             get
             {
@@ -302,7 +311,7 @@ namespace CarLifeCycleCostsClac
                 OnPropertyChanged("AverageRepairCosts");
             }
         }
-        public float FuelConsumption
+        public double FuelConsumption
         {
             get
             {
@@ -314,12 +323,12 @@ namespace CarLifeCycleCostsClac
             }
             set
             {
-                fuelConsumption = (float)Math.Round(value, 2);
+                fuelConsumption = (double)Math.Round(value, 2);
                 updateLifeCycleCost();
                 OnPropertyChanged("FuelConsumption");
             }
         }
-        public float LifeCycleCost
+        public double LifeCycleCost
         {
             get { return lifeCycleCost; }
             set
@@ -328,7 +337,7 @@ namespace CarLifeCycleCostsClac
                 OnPropertyChanged("LifeCycleCost");
             }
         }
-        public float ComparativeCosts
+        public double ComparativeCosts
         {
             get { return comparativeCosts; }
             set
@@ -337,7 +346,7 @@ namespace CarLifeCycleCostsClac
                 OnPropertyChanged("ComparativeCosts");
             }
         }
-        public float ComparisonValue
+        public double ComparisonValue
         {
             get { return comparisonValue; }
             set
@@ -365,22 +374,22 @@ namespace CarLifeCycleCostsClac
             try
             {
                 CarModel = carModel;
-                this.expectedRangeOfOperation = int.Parse(expectedRangeOfOperation);
-                this.fuelPrice = float.Parse(fuelPrice);
-                this.purchasePrice = int.Parse(purchasePrice);
-                this.technicalLife = int.Parse(technicalLife);
-                this.maintenance1 = int.Parse(maintenance1);
-                this.maintenance2 = int.Parse(maintenance2);
-                this.maintenance3 = int.Parse(maintenance3);
-                this.maintenance1Price = int.Parse(maintenance1Price);
-                this.maintenance2Price = int.Parse(maintenance2Price);
-                this.maintenance3Price = int.Parse(maintenance3Price);
-                this.maintenance1Years = int.Parse(maintenance1Years);
-                this.maintenance2Years = int.Parse(maintenance2Years);
-                this.maintenance3Years = int.Parse(maintenance3Years);
-                this.mTBF = int.Parse(mTBF);
-                this.averageRepairCosts = int.Parse(averageRepairCosts);
-                this.fuelConsumption = float.Parse(fuelConsumption);
+                this.expectedRangeOfOperation = ulong.Parse(expectedRangeOfOperation);
+                this.fuelPrice = double.Parse(fuelPrice);
+                this.purchasePrice = ulong.Parse(purchasePrice);
+                this.technicalLife = ulong.Parse(technicalLife);
+                this.maintenance1 = ulong.Parse(maintenance1);
+                this.maintenance2 = ulong.Parse(maintenance2);
+                this.maintenance3 = ulong.Parse(maintenance3);
+                this.maintenance1Price = ulong.Parse(maintenance1Price);
+                this.maintenance2Price = ulong.Parse(maintenance2Price);
+                this.maintenance3Price = ulong.Parse(maintenance3Price);
+                this.maintenance1Years = ulong.Parse(maintenance1Years);
+                this.maintenance2Years = ulong.Parse(maintenance2Years);
+                this.maintenance3Years = ulong.Parse(maintenance3Years);
+                this.mTBF = ulong.Parse(mTBF);
+                this.averageRepairCosts = ulong.Parse(averageRepairCosts);
+                this.fuelConsumption = double.Parse(fuelConsumption);
                 this.color = color;
             }
             catch(ArgumentException argEx)
@@ -399,19 +408,19 @@ namespace CarLifeCycleCostsClac
             }
         public void updateLifeCycleCost()
         {
-            int preventiveMaintenance = 0;
-            int yearsOfUse = 1;
-            int localTechnicalLife = technicalLife;
-            List<int> maintenances = new List<int> { maintenance1, maintenance2, maintenance3 };
+            ulong preventiveMaintenance = 0;
+            ulong yearsOfUse = 1;
+            ulong localTechnicalLife = technicalLife;
+            List<ulong> maintenances = new List<ulong> { maintenance1, maintenance2, maintenance3 };
             maintenances.Sort();
             maintenances.Reverse();
-            List<int> maintenancePrices = new List<int> { maintenance1Price, maintenance2Price, maintenance3Price };
+            List<ulong> maintenancePrices = new List<ulong> { maintenance1Price, maintenance2Price, maintenance3Price };
             maintenancePrices.Sort();
             maintenancePrices.Reverse();
 
             if (expectedRangeOfOperation < maintenances.Where(x => x > 0).Min())
             {
-                List<int> maintenanceYears = new List<int> { maintenance1Years, maintenance2Years, maintenance3Years };
+                List<ulong> maintenanceYears = new List<ulong> { maintenance1Years, maintenance2Years, maintenance3Years };
                 maintenanceYears.Sort();
                 maintenanceYears.Reverse();
                 while (localTechnicalLife > expectedRangeOfOperation)
@@ -434,8 +443,8 @@ namespace CarLifeCycleCostsClac
             }
             else
             {
-                int minDistance = maintenances.Where(x => x > 0).Min();
-                int distance = minDistance;
+                ulong minDistance = maintenances.Where(x => x > 0).Min();
+                ulong distance = minDistance;
                 while (localTechnicalLife > minDistance)
                 {
                     if (maintenances[0] > 0 && distance % maintenances[0] == 0)
@@ -458,8 +467,8 @@ namespace CarLifeCycleCostsClac
                     }
                 }
             }
-            LifeCycleCost = (float)Math.Round(purchasePrice + (fuelConsumption / 100 * fuelPrice * technicalLife) + preventiveMaintenance + (technicalLife / mTBF * averageRepairCosts), 2);
-            ComparativeCosts = (float)Math.Round(LifeCycleCost / TechnicalLife, 2);
+            LifeCycleCost = (double)Math.Round(purchasePrice + (fuelConsumption / 100 * fuelPrice * technicalLife) + preventiveMaintenance + (technicalLife / mTBF * averageRepairCosts), 2);
+            ComparativeCosts = (double)Math.Round(LifeCycleCost / TechnicalLife, 2);
         }
     }
 }

@@ -209,5 +209,13 @@ namespace CarLifeCycleCostsClac
         {
             e.Handled = new Regex("[^0-9]").IsMatch(e.Text);
         }
+
+        private void expectedRangeOfOperationTextBox_LostFocus(object sender, RoutedEventArgs e)
+        {
+            if (string.IsNullOrEmpty(expectedRangeOfOperationTextBox.Text))
+            {
+                expectedRangeOfOperationTextBox.Text = "0";
+            }
+        }
     }
 }

@@ -71,7 +71,7 @@ namespace CarLifeCycleCostsClac
                     words.Add(line.Substring(startIndex, line.Length - startIndex));
                     */
 
-                    List<string> words = new List<string>(line.Split(','));
+                    List<string> words = new List<string>(line.Split(';'));
 
                     Cars.Add(new Car(words[0], words[1], words[2], words[3], words[4],
                         words[5], words[6], words[7], words[8], words[9],
