@@ -8,27 +8,27 @@ namespace CarLifeCycleCostsClac
 {
     public class Car : ObservableObject
     {
-        private string carModel;
-        private ulong expectedRangeOfOperation;
-        private double fuelPrice;
-        private ulong purchasePrice;
-        private ulong technicalLife;
-        private ulong maintenance1;
-        private ulong maintenance2;
-        private ulong maintenance3;
-        private ulong maintenance1Price;
-        private ulong maintenance2Price;
-        private ulong maintenance3Price;
-        private ulong maintenance1Years;
-        private ulong maintenance2Years;
-        private ulong maintenance3Years;
-        private ulong mTBF;
-        private ulong averageRepairCosts;
-        private double fuelConsumption;
-        private double lifeCycleCost;
-        private double comparativeCosts;
-        private double comparisonValue;
-        private string color;
+        protected string carModel;
+        protected ulong expectedRangeOfOperation;
+        protected double fuelPrice;
+        protected ulong purchasePrice;
+        protected ulong technicalLife;
+        protected ulong maintenance1;
+        protected ulong maintenance2;
+        protected ulong maintenance3;
+        protected ulong maintenance1Price;
+        protected ulong maintenance2Price;
+        protected ulong maintenance3Price;
+        protected ulong maintenance1Years;
+        protected ulong maintenance2Years;
+        protected ulong maintenance3Years;
+        protected ulong mTBF;
+        protected ulong averageRepairCosts;
+        protected double fuelConsumption;
+        protected double lifeCycleCost;
+        protected double comparativeCosts;
+        protected double comparisonValue;
+        protected string color;
         public string CarModel
         {
             get { return carModel; }

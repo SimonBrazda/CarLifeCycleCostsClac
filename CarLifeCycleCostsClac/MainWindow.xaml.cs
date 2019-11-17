@@ -130,82 +130,12 @@ namespace CarLifeCycleCostsClac
 
         }
 
-        private void expRangeOfOperation_previewTextInput(object sender, TextCompositionEventArgs e)
-        {
-            e.Handled = new Regex("[^0-9]").IsMatch(e.Text);
-        }
-
-        private void fuelPrice_previewTextInput(object sender, TextCompositionEventArgs e)
+        private void float_previewTextInput(object sender, TextCompositionEventArgs e)
         {
             e.Handled = new Regex("[^0-9^.]").IsMatch(e.Text);
         }
-
-        private void purchasePrice_previewTextInput(object sender, TextCompositionEventArgs e)
-        {
-            e.Handled = new Regex("[^0-9]").IsMatch(e.Text);
-        }
-
-        private void technicalLife_previewTextInput(object sender, TextCompositionEventArgs e)
-        {
-            e.Handled = new Regex("[^0-9]").IsMatch(e.Text);
-        }
-
-        private void maintenance1_previewTextInput(object sender, TextCompositionEventArgs e)
-        {
-            e.Handled = new Regex("[^0-9]").IsMatch(e.Text);
-        }
-
-        private void maintenance2_previewTextInput(object sender, TextCompositionEventArgs e)
-        {
-            e.Handled = new Regex("[^0-9]").IsMatch(e.Text);
-        }
-
-        private void maintenance3_previewTextInput(object sender, TextCompositionEventArgs e)
-        {
-            e.Handled = new Regex("[^0-9]").IsMatch(e.Text);
-        }
-
-        private void maintenance1Price_previewTextInput(object sender, TextCompositionEventArgs e)
-        {
-            e.Handled = new Regex("[^0-9]").IsMatch(e.Text);
-        }
-
-        private void maintenance2Price_previewTextInput(object sender, TextCompositionEventArgs e)
-        {
-            e.Handled = new Regex("[^0-9]").IsMatch(e.Text);
-        }
-
-        private void maintenance3Price_previewTextInput(object sender, TextCompositionEventArgs e)
-        {
-            e.Handled = new Regex("[^0-9]").IsMatch(e.Text);
-        }
-
-        private void MTBF_previewTextInput(object sender, TextCompositionEventArgs e)
-        {
-            e.Handled = new Regex("[^0-9]").IsMatch(e.Text);
-        }
-
-        private void averageRepairCosts_previewTextInput(object sender, TextCompositionEventArgs e)
-        {
-            e.Handled = new Regex("[^0-9]").IsMatch(e.Text);
-        }
-
-        private void fuelConsumption_previewTextInput(object sender, TextCompositionEventArgs e)
-        {
-            e.Handled = new Regex("[^0-9^.]").IsMatch(e.Text);
-        }
-
-        private void maintenance1Years_previewTextInput(object sender, TextCompositionEventArgs e)
-        {
-            e.Handled = new Regex("[^0-9]").IsMatch(e.Text);
-        }
-
-        private void maintenance2Years_previewTextInput(object sender, TextCompositionEventArgs e)
-        {
-            e.Handled = new Regex("[^0-9]").IsMatch(e.Text);
-        }
-
-        private void maintenance3Years_previewTextInput(object sender, TextCompositionEventArgs e)
+       
+        private void int_previewTextInput(object sender, TextCompositionEventArgs e)
         {
             e.Handled = new Regex("[^0-9]").IsMatch(e.Text);
         }
@@ -252,8 +182,9 @@ namespace CarLifeCycleCostsClac
         {
             try
             {
-                if (string.IsNullOrEmpty(maintenance1TextBox.Text))
+                if (string.IsNullOrEmpty(maintenance1TextBox.Text) || maintenance1TextBox.Text == "0")
                 {
+                    maintenance1TextBox.Text = "1";
                     maintenance1TextBox.Text = "0";
                 }
             }
@@ -373,9 +304,19 @@ namespace CarLifeCycleCostsClac
                 maintenance3yearsTextBox.Text = "0";
             }
         }
-        private void removeButton_IsEnabled(object sender, RoutedEventArgs e)
-        {
 
+        private void carListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            removeButton.IsEnabled = e.AddedItems.Count == 0 ? false : true;
+        }
+
+        private void inputTextBox_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            TextBox textBox = sender as TextBox;
+            if (string.IsNullOrEmpty(textBox.Text))
+            {
+                textBox.Text = "0";
+            }
         }
     }
 }
