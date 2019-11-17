@@ -101,9 +101,9 @@ namespace CarLifeCycleCostsClac
             }
             set
             {
-                if(value < 1)
+                if(value < 1000)
                 {
-                    technicalLife = 1;
+                    technicalLife = 1000;
                 }
                 else
                 {
@@ -121,7 +121,14 @@ namespace CarLifeCycleCostsClac
             }
             set
             {
-                maintenance1 = value;
+                if(maintenance2 == 0 && maintenance3 == 0)
+                {
+                    throw new ArgumentException("All maintenances cannot be 0");
+                }
+                else
+                {
+                    maintenance1 = value;
+                }
                 updateLifeCycleCost();
                 OnPropertyChanged("Maintenance1");
             }
@@ -130,15 +137,18 @@ namespace CarLifeCycleCostsClac
         {
             get
             {
-                if (string.IsNullOrEmpty(maintenance2.ToString()))
-                {
-                    return 0;
-                }
                 return maintenance2;
             }
             set
             {
-                maintenance2 = value;
+                if (maintenance1 == 0 && maintenance3 == 0)
+                {
+                    throw new ArgumentException("All maintenances cannot be 0");
+                }
+                else
+                {
+                    maintenance2 = value;
+                }
                 updateLifeCycleCost();
                 OnPropertyChanged("Maintenance2");
             }
@@ -147,15 +157,18 @@ namespace CarLifeCycleCostsClac
         {
             get
             {
-                if (string.IsNullOrEmpty(maintenance3.ToString()))
-                {
-                    return 0;
-                }
                 return maintenance3;
             }
             set
             {
-                maintenance3 = value;
+                if (maintenance1 == 0 && maintenance2 == 0)
+                {
+                    throw new ArgumentException("All maintenances cannot be 0");
+                }
+                else
+                {
+                    maintenance3 = value;
+                }
                 updateLifeCycleCost();
                 OnPropertyChanged("Maintenance3");
             }
@@ -164,10 +177,6 @@ namespace CarLifeCycleCostsClac
         {
             get
             {
-                if (string.IsNullOrEmpty(maintenance1Price.ToString()))
-                {
-                    return 0;
-                }
                 return maintenance1Price;
             }
             set
@@ -230,10 +239,6 @@ namespace CarLifeCycleCostsClac
         {
             get
             {
-                if (string.IsNullOrEmpty(maintenance1Years.ToString()))
-                {
-                    return 0;
-                }
                 return maintenance1Years;
             }
             set
@@ -264,10 +269,6 @@ namespace CarLifeCycleCostsClac
         {
             get
             {
-                if (string.IsNullOrEmpty(maintenance3Years.ToString()))
-                {
-                    return 0;
-                }
                 return maintenance3Years;
             }
             set

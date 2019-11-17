@@ -49,7 +49,7 @@ namespace CarLifeCycleCostsClac
             {
                 carManager.Remove(carManager.SelectedCar);
             }
-            catch(ArgumentNullException argNullEx)
+            catch (ArgumentNullException argNullEx)
             {
                 MessageBox.Show(argNullEx.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
@@ -61,7 +61,7 @@ namespace CarLifeCycleCostsClac
             {
                 carManager.updateComparisonCars();
             }
-            catch(ArgumentException argEx)
+            catch (ArgumentException argEx)
             {
                 MessageBox.Show(argEx.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
@@ -73,7 +73,7 @@ namespace CarLifeCycleCostsClac
             {
                 carManager.compareSelectedCars();
             }
-            catch(ArgumentException argEx)
+            catch (ArgumentException argEx)
             {
                 MessageBox.Show(argEx.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
@@ -127,7 +127,7 @@ namespace CarLifeCycleCostsClac
                 MessageBox.Show(securityEx.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
 
-            
+
         }
 
         private void expRangeOfOperation_previewTextInput(object sender, TextCompositionEventArgs e)
@@ -214,8 +214,168 @@ namespace CarLifeCycleCostsClac
         {
             if (string.IsNullOrEmpty(expectedRangeOfOperationTextBox.Text))
             {
-                expectedRangeOfOperationTextBox.Text = "0";
+                expectedRangeOfOperationTextBox.Text = "100";
             }
+        }
+
+        private void PHMpriceTextBox_LostFocus(object sender, RoutedEventArgs e)
+        {
+            if (string.IsNullOrEmpty(PHMpriceTextBox.Text) || PHMpriceTextBox.Text.Count(f => f == '.') == PHMpriceTextBox.Text.Length)
+            {
+                PHMpriceTextBox.Text = "0";
+            }
+            else if (PHMpriceTextBox.Text.Count(f => f == '.') > 1)
+            {
+                int initialIndex = PHMpriceTextBox.Text.IndexOf('.');
+                int index = PHMpriceTextBox.Text.IndexOf('.', ++initialIndex);
+                PHMpriceTextBox.Text = PHMpriceTextBox.Text.Substring(0, index);
+            }
+        }
+
+        private void purchasePriceTextBox_LostFocus(object sender, RoutedEventArgs e)
+        {
+            if (string.IsNullOrEmpty(purchasePriceTextBox.Text))
+            {
+                purchasePriceTextBox.Text = "0";
+            }
+        }
+
+        private void technicalLifeTextBox_LostFocus(object sender, RoutedEventArgs e)
+        {
+            if (string.IsNullOrEmpty(technicalLifeTextBox.Text))
+            {
+                technicalLifeTextBox.Text = "1000";
+            }
+        }
+
+        private void maintenance1TextBox_LostFocus(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                if (string.IsNullOrEmpty(maintenance1TextBox.Text))
+                {
+                    maintenance1TextBox.Text = "0";
+                }
+            }
+            catch (ArgumentException argEx)
+            {
+                MessageBox.Show(argEx.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                maintenance1TextBox.Text = "25000";
+            }
+        }
+
+        private void maintenance2TextBox_LostFocus(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                if (string.IsNullOrEmpty(maintenance2TextBox.Text))
+                {
+                    maintenance2TextBox.Text = "0";
+                }
+            }
+            catch (ArgumentException argEx)
+            {
+                MessageBox.Show(argEx.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                maintenance2TextBox.Text = "25000";
+            }
+        }
+
+        private void maintenance3TextBox_LostFocus(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                if (string.IsNullOrEmpty(maintenance3TextBox.Text))
+                {
+                    maintenance3TextBox.Text = "0";
+                }
+            }
+            catch (ArgumentException argEx)
+            {
+                MessageBox.Show(argEx.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                maintenance3TextBox.Text = "25000";
+            }
+        }
+
+        private void maintenance1PriceTextBox_LostFocus(object sender, RoutedEventArgs e)
+        {
+            if (string.IsNullOrEmpty(maintenance1PriceTextBox.Text))
+            {
+                maintenance1PriceTextBox.Text = "0";
+            }
+        }
+
+        private void maintenance2PriceTextBox_LostFocus(object sender, RoutedEventArgs e)
+        {
+            if (string.IsNullOrEmpty(maintenance2PriceTextBox.Text))
+            {
+                maintenance2PriceTextBox.Text = "0";
+            }
+        }
+
+        private void maintenance3PriceTextBox_LostFocus(object sender, RoutedEventArgs e)
+        {
+            if (string.IsNullOrEmpty(maintenance3PriceTextBox.Text))
+            {
+                maintenance3PriceTextBox.Text = "0";
+            }
+        }
+
+        private void MTBFPriceTextBox_LostFocus(object sender, RoutedEventArgs e)
+        {
+            if (string.IsNullOrEmpty(MTBFPriceTextBox.Text))
+            {
+                MTBFPriceTextBox.Text = "0";
+            }
+        }
+
+        private void averageRepairCostsTextBox_LostFocus(object sender, RoutedEventArgs e)
+        {
+            if (string.IsNullOrEmpty(averageRepairCostsTextBox.Text))
+            {
+                averageRepairCostsTextBox.Text = "0";
+            }
+        }
+
+        private void fuelConsumptionTextBox_LostFocus(object sender, RoutedEventArgs e)
+        {
+            if (string.IsNullOrEmpty(fuelConsumptionTextBox.Text) || fuelConsumptionTextBox.Text.Count(f => f == '.') == fuelConsumptionTextBox.Text.Length)
+            {
+                fuelConsumptionTextBox.Text = "0";
+            }
+            else if (fuelConsumptionTextBox.Text.Count(f => f == '.') > 1)
+            {
+                int initialIndex = fuelConsumptionTextBox.Text.IndexOf('.');
+                int index = fuelConsumptionTextBox.Text.IndexOf('.', ++initialIndex);
+                fuelConsumptionTextBox.Text = fuelConsumptionTextBox.Text.Substring(0, index);
+            }
+        }
+
+        private void maintenance1YearsTextBox_LostFocus(object sender, RoutedEventArgs e)
+        {
+            if (string.IsNullOrEmpty(maintenance1YearsTextBox.Text))
+            {
+                maintenance1YearsTextBox.Text = "0";
+            }
+        }
+
+        private void maintenance2YearsTextBox_LostFocus(object sender, RoutedEventArgs e)
+        {
+            if (string.IsNullOrEmpty(maintenance2YearsTextBox.Text))
+            {
+                maintenance2YearsTextBox.Text = "0";
+            }
+        }
+
+        private void maintenance3yearsTextBox_LostFocus(object sender, RoutedEventArgs e)
+        {
+            if (string.IsNullOrEmpty(maintenance3yearsTextBox.Text))
+            {
+                maintenance3yearsTextBox.Text = "0";
+            }
+        }
+        private void removeButton_IsEnabled(object sender, RoutedEventArgs e)
+        {
+
         }
     }
 }
