@@ -60,6 +60,8 @@ namespace CarLifeCycleCostsClac
             try
             {
                 carManager.updateComparisonCars();
+                selectButton.IsEnabled = isSelectButtEnabled();
+                compareButton.IsEnabled = isCompareButtEnabled();
             }
             catch (ArgumentException argEx)
             {
@@ -132,7 +134,24 @@ namespace CarLifeCycleCostsClac
 
         private void float_previewTextInput(object sender, TextCompositionEventArgs e)
         {
-            e.Handled = new Regex("[^0-9^.]").IsMatch(e.Text);
+            TextBox textBox = sender as TextBox;
+            if (textBox.Text.Contains('.'))
+            {
+                int dotIndex = textBox.Text.IndexOf('.');
+                if (textBox.Text.Substring(dotIndex, textBox.Text.Length - dotIndex).Length > 2)
+                {
+                    e.Handled = true;
+                }
+                else
+                {
+                    e.Handled = new Regex("[^0-9]").IsMatch(e.Text);
+                }
+            }
+            else
+            {
+                e.Handled = !new Regex(@"^\d*\.?\d?$").IsMatch(e.Text);
+            }
+            
         }
        
         private void int_previewTextInput(object sender, TextCompositionEventArgs e)
@@ -140,174 +159,10 @@ namespace CarLifeCycleCostsClac
             e.Handled = new Regex("[^0-9]").IsMatch(e.Text);
         }
 
-        private void expectedRangeOfOperationTextBox_LostFocus(object sender, RoutedEventArgs e)
-        {
-            if (string.IsNullOrEmpty(expectedRangeOfOperationTextBox.Text))
-            {
-                expectedRangeOfOperationTextBox.Text = "100";
-            }
-        }
-
-        private void PHMpriceTextBox_LostFocus(object sender, RoutedEventArgs e)
-        {
-            if (string.IsNullOrEmpty(PHMpriceTextBox.Text) || PHMpriceTextBox.Text.Count(f => f == '.') == PHMpriceTextBox.Text.Length)
-            {
-                PHMpriceTextBox.Text = "0";
-            }
-            else if (PHMpriceTextBox.Text.Count(f => f == '.') > 1)
-            {
-                int initialIndex = PHMpriceTextBox.Text.IndexOf('.');
-                int index = PHMpriceTextBox.Text.IndexOf('.', ++initialIndex);
-                PHMpriceTextBox.Text = PHMpriceTextBox.Text.Substring(0, index);
-            }
-        }
-
-        private void purchasePriceTextBox_LostFocus(object sender, RoutedEventArgs e)
-        {
-            if (string.IsNullOrEmpty(purchasePriceTextBox.Text))
-            {
-                purchasePriceTextBox.Text = "0";
-            }
-        }
-
-        private void technicalLifeTextBox_LostFocus(object sender, RoutedEventArgs e)
-        {
-            if (string.IsNullOrEmpty(technicalLifeTextBox.Text))
-            {
-                technicalLifeTextBox.Text = "1000";
-            }
-        }
-
-        private void maintenance1TextBox_LostFocus(object sender, RoutedEventArgs e)
-        {
-            try
-            {
-                if (string.IsNullOrEmpty(maintenance1TextBox.Text) || maintenance1TextBox.Text == "0")
-                {
-                    maintenance1TextBox.Text = "1";
-                    maintenance1TextBox.Text = "0";
-                }
-            }
-            catch (ArgumentException argEx)
-            {
-                MessageBox.Show(argEx.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-                maintenance1TextBox.Text = "25000";
-            }
-        }
-
-        private void maintenance2TextBox_LostFocus(object sender, RoutedEventArgs e)
-        {
-            try
-            {
-                if (string.IsNullOrEmpty(maintenance2TextBox.Text))
-                {
-                    maintenance2TextBox.Text = "0";
-                }
-            }
-            catch (ArgumentException argEx)
-            {
-                MessageBox.Show(argEx.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-                maintenance2TextBox.Text = "25000";
-            }
-        }
-
-        private void maintenance3TextBox_LostFocus(object sender, RoutedEventArgs e)
-        {
-            try
-            {
-                if (string.IsNullOrEmpty(maintenance3TextBox.Text))
-                {
-                    maintenance3TextBox.Text = "0";
-                }
-            }
-            catch (ArgumentException argEx)
-            {
-                MessageBox.Show(argEx.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-                maintenance3TextBox.Text = "25000";
-            }
-        }
-
-        private void maintenance1PriceTextBox_LostFocus(object sender, RoutedEventArgs e)
-        {
-            if (string.IsNullOrEmpty(maintenance1PriceTextBox.Text))
-            {
-                maintenance1PriceTextBox.Text = "0";
-            }
-        }
-
-        private void maintenance2PriceTextBox_LostFocus(object sender, RoutedEventArgs e)
-        {
-            if (string.IsNullOrEmpty(maintenance2PriceTextBox.Text))
-            {
-                maintenance2PriceTextBox.Text = "0";
-            }
-        }
-
-        private void maintenance3PriceTextBox_LostFocus(object sender, RoutedEventArgs e)
-        {
-            if (string.IsNullOrEmpty(maintenance3PriceTextBox.Text))
-            {
-                maintenance3PriceTextBox.Text = "0";
-            }
-        }
-
-        private void MTBFPriceTextBox_LostFocus(object sender, RoutedEventArgs e)
-        {
-            if (string.IsNullOrEmpty(MTBFPriceTextBox.Text))
-            {
-                MTBFPriceTextBox.Text = "0";
-            }
-        }
-
-        private void averageRepairCostsTextBox_LostFocus(object sender, RoutedEventArgs e)
-        {
-            if (string.IsNullOrEmpty(averageRepairCostsTextBox.Text))
-            {
-                averageRepairCostsTextBox.Text = "0";
-            }
-        }
-
-        private void fuelConsumptionTextBox_LostFocus(object sender, RoutedEventArgs e)
-        {
-            if (string.IsNullOrEmpty(fuelConsumptionTextBox.Text) || fuelConsumptionTextBox.Text.Count(f => f == '.') == fuelConsumptionTextBox.Text.Length)
-            {
-                fuelConsumptionTextBox.Text = "0";
-            }
-            else if (fuelConsumptionTextBox.Text.Count(f => f == '.') > 1)
-            {
-                int initialIndex = fuelConsumptionTextBox.Text.IndexOf('.');
-                int index = fuelConsumptionTextBox.Text.IndexOf('.', ++initialIndex);
-                fuelConsumptionTextBox.Text = fuelConsumptionTextBox.Text.Substring(0, index);
-            }
-        }
-
-        private void maintenance1YearsTextBox_LostFocus(object sender, RoutedEventArgs e)
-        {
-            if (string.IsNullOrEmpty(maintenance1YearsTextBox.Text))
-            {
-                maintenance1YearsTextBox.Text = "0";
-            }
-        }
-
-        private void maintenance2YearsTextBox_LostFocus(object sender, RoutedEventArgs e)
-        {
-            if (string.IsNullOrEmpty(maintenance2YearsTextBox.Text))
-            {
-                maintenance2YearsTextBox.Text = "0";
-            }
-        }
-
-        private void maintenance3yearsTextBox_LostFocus(object sender, RoutedEventArgs e)
-        {
-            if (string.IsNullOrEmpty(maintenance3yearsTextBox.Text))
-            {
-                maintenance3yearsTextBox.Text = "0";
-            }
-        }
-
         private void carListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             removeButton.IsEnabled = e.AddedItems.Count == 0 ? false : true;
+            selectButton.IsEnabled = e.AddedItems.Count == 0 ? false : true;
         }
 
         private void inputTextBox_TextChanged(object sender, TextChangedEventArgs e)
@@ -317,6 +172,39 @@ namespace CarLifeCycleCostsClac
             {
                 textBox.Text = "0";
             }
+        }
+
+        private void floatTextBox_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            TextBox textBox = sender as TextBox;
+            if (string.IsNullOrEmpty(textBox.Text))
+            {
+                textBox.Text = "0";
+            }
+        }
+
+        private void carListBox_PreviewMouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            try
+            {
+                carManager.updateComparisonCars();
+                selectButton.IsEnabled = isSelectButtEnabled();
+                compareButton.IsEnabled = isCompareButtEnabled();
+            }
+            catch (ArgumentException argEx)
+            {
+                MessageBox.Show(argEx.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+
+        public bool isCompareButtEnabled()
+        {
+            return carManager.ComparisonCar1 != null && carManager.ComparisonCar2 != null ? true : false;
+        }
+
+        public bool isSelectButtEnabled()
+        {
+            return carManager.ComparisonCar1 != null && carManager.SelectedCar.CarModel == carManager.ComparisonCar1.CarModel ? false : true;
         }
     }
 }

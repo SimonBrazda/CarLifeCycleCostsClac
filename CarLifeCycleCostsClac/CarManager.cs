@@ -17,8 +17,8 @@ namespace CarLifeCycleCostsClac
         
 
         private Car selectedCar;
-        private Car comparisonCar1;
-        private Car comparisonCar2;
+        private ComparisonCar comparisonCar1;
+        private ComparisonCar comparisonCar2;
 
         public Car SelectedCar 
         {
@@ -30,7 +30,7 @@ namespace CarLifeCycleCostsClac
             }
         }
 
-        public Car ComparisonCar1
+        public ComparisonCar ComparisonCar1
         {
             get { return comparisonCar1; }
             set
@@ -40,7 +40,7 @@ namespace CarLifeCycleCostsClac
             }
         }
 
-        public Car ComparisonCar2
+        public ComparisonCar ComparisonCar2
         {
             get { return comparisonCar2; }
             set
@@ -174,26 +174,26 @@ namespace CarLifeCycleCostsClac
         {
             if(ComparisonCar1 != null && ComparisonCar2 != null)
             {
-                ComparisonCar1 = SelectedCar;
-                ComparisonCar1.ComparisonValue = 0;
-                ComparisonCar1.Color = "Black";
+                ComparisonCar1 = new ComparisonCar(SelectedCar);
+                //ComparisonCar1.ComparisonValue = 0;
+                //ComparisonCar1.Color = "Black";
                 ComparisonCar2 = null;
             }
             else if(ComparisonCar1 != null && ComparisonCar2 == null)
             {
-                if (ComparisonCar1 == SelectedCar)
+                if (ComparisonCar1.CarModel == SelectedCar.CarModel)
                 {
                     throw new ArgumentException("Can not compare same Car Models.\nPlease select different one.");
                 }
-                ComparisonCar2 = SelectedCar;
-                ComparisonCar2.ComparisonValue = 0;
-                ComparisonCar2.Color = "Black";
+                ComparisonCar2 = new ComparisonCar(SelectedCar);
+                //ComparisonCar2.ComparisonValue = 0;
+                //ComparisonCar2.Color = "Black";
             }
             else
             {
-                ComparisonCar1 = SelectedCar;
-                ComparisonCar1.ComparisonValue = 0;
-                ComparisonCar1.Color = "Black";
+                ComparisonCar1 = new ComparisonCar(SelectedCar);
+                //ComparisonCar1.ComparisonValue = 0;
+                //ComparisonCar1.Color = "Black";
             }
         }
 
@@ -213,8 +213,8 @@ namespace CarLifeCycleCostsClac
             }
             else
             {
-                ComparisonCar1.ComparisonValue = (float)Math.Round(ComparisonCar1.LifeCycleCost - ComparisonCar2.LifeCycleCost, 2);
-                ComparisonCar2.ComparisonValue = (float)Math.Round(ComparisonCar2.LifeCycleCost - ComparisonCar1.LifeCycleCost, 2);
+                ComparisonCar1.ComparisonValue = (double)Math.Round(ComparisonCar1.LifeCycleCost - ComparisonCar2.LifeCycleCost, 2);
+                ComparisonCar2.ComparisonValue = (double)Math.Round(ComparisonCar2.LifeCycleCost - ComparisonCar1.LifeCycleCost, 2);
                 if (ComparisonCar1.ComparisonValue > ComparisonCar2.ComparisonValue)
                 {
                     ComparisonCar1.Color = "Green";

@@ -27,8 +27,8 @@ namespace CarLifeCycleCostsClac
         protected double fuelConsumption;
         protected double lifeCycleCost;
         protected double comparativeCosts;
-        protected double comparisonValue;
-        protected string color;
+        //protected double comparisonValue;
+        //protected string color;
         public string CarModel
         {
             get { return carModel; }
@@ -121,9 +121,15 @@ namespace CarLifeCycleCostsClac
             }
             set
             {
-                if(maintenance2 == 0 && maintenance3 == 0)
+                if(maintenance2 == 0 && maintenance3 == 0 && value == 0)
                 {
-                    throw new ArgumentException("All maintenances cannot be 0");
+                    maintenance1 = 25000;
+                }
+                else if((maintenance2 != 0 || maintenance3 != 0) && Maintenance1Price != 0 && Maintenance1Years != 0 && value == 0)
+                {
+                    maintenance1 = value;
+                    Maintenance1Price = 0;
+                    Maintenance1Years = 0;
                 }
                 else
                 {
@@ -141,9 +147,15 @@ namespace CarLifeCycleCostsClac
             }
             set
             {
-                if (maintenance1 == 0 && maintenance3 == 0)
+                if (maintenance1 == 0 && maintenance3 == 0 && value == 0)
                 {
-                    throw new ArgumentException("All maintenances cannot be 0");
+                    maintenance2 = 25000;
+                }
+                else if ((maintenance1 != 0 || maintenance3 != 0) && Maintenance2Price != 0 && Maintenance2Years != 0 && value == 0)
+                {
+                    maintenance2 = value;
+                    Maintenance2Price = 0;
+                    Maintenance2Years = 0;
                 }
                 else
                 {
@@ -161,9 +173,15 @@ namespace CarLifeCycleCostsClac
             }
             set
             {
-                if (maintenance1 == 0 && maintenance2 == 0)
+                if (maintenance1 == 0 && maintenance2 == 0 && value == 0)
                 {
-                    throw new ArgumentException("All maintenances cannot be 0");
+                    maintenance3 = 25000;
+                }
+                else if ((maintenance1 != 0 || maintenance2 != 0) && Maintenance3Price != 0 && Maintenance3Years != 0 && value == 0)
+                {
+                    maintenance3 = value;
+                    Maintenance3Price = 0;
+                    Maintenance3Years = 0;
                 }
                 else
                 {
@@ -181,11 +199,19 @@ namespace CarLifeCycleCostsClac
             }
             set
             {
-                maintenance1Price = value;
-                if (value <= 0)
+                if (maintenance2Price == 0 && maintenance3Price == 0 && value == 0)
                 {
+                    maintenance1Price = 8000;
+                }
+                else if ((maintenance2Price != 0 || maintenance3Price != 0) && Maintenance1 != 0 && Maintenance1Years != 0 && value == 0)
+                {
+                    maintenance1Price = value;
                     Maintenance1 = 0;
                     Maintenance1Years = 0;
+                }
+                else
+                {
+                    maintenance1Price = value;
                 }
                 updateLifeCycleCost();
                 OnPropertyChanged("Maintenance1Price");
@@ -203,11 +229,19 @@ namespace CarLifeCycleCostsClac
             }
             set
             {
-                maintenance2Price = value;
-                if (value <= 0)
+                if (maintenance1Price == 0 && maintenance3Price == 0 && value == 0)
                 {
+                    maintenance1Price = 8000;
+                }
+                else if ((maintenance1Price != 0 || maintenance3Price != 0) && Maintenance2 != 0 && Maintenance2Years != 0 && value == 0)
+                {
+                    maintenance2Price = value;
                     Maintenance2 = 0;
                     Maintenance2Years = 0;
+                }
+                else
+                {
+                    maintenance2Price = value;
                 }
                 updateLifeCycleCost();
                 OnPropertyChanged("Maintenance2Price");
@@ -225,11 +259,19 @@ namespace CarLifeCycleCostsClac
             }
             set
             {
-                maintenance3Price = value;
-                if(value <= 0)
+                if (maintenance1Price == 0 && maintenance2Price == 0 && value == 0)
                 {
+                    maintenance3Price = 8000;
+                }
+                else if ((maintenance1Price != 0 || maintenance2Price != 0) && Maintenance3 != 0 && Maintenance3Years != 0 && value == 0)
+                {
+                    maintenance3Price = value;
                     Maintenance3 = 0;
                     Maintenance3Years = 0;
+                }
+                else
+                {
+                    maintenance3Price = value;
                 }
                 updateLifeCycleCost();
                 OnPropertyChanged("Maintenance3Price");
@@ -243,7 +285,20 @@ namespace CarLifeCycleCostsClac
             }
             set
             {
-                maintenance1Years = value;
+                if (maintenance2Years == 0 && maintenance3Years == 0 && value == 0)
+                {
+                    maintenance1Years = 1;
+                }
+                else if ((maintenance2Years != 0 || maintenance3Years != 0) && Maintenance1Price != 0 && Maintenance1 != 0 && value == 0)
+                {
+                    maintenance1Years = value;
+                    Maintenance1Price = 0;
+                    Maintenance1 = 0;
+                }
+                else
+                {
+                    maintenance1Years = value;
+                }
                 updateLifeCycleCost();
                 OnPropertyChanged("Maintenance1Years");
             }
@@ -260,7 +315,20 @@ namespace CarLifeCycleCostsClac
             }
             set
             {
-                maintenance2Years = value;
+                if (maintenance1Years == 0 && maintenance3Years == 0 && value == 0)
+                {
+                    maintenance2Years = 1;
+                }
+                else if ((maintenance1Years != 0 || maintenance3Years != 0) && Maintenance2Price != 0 && Maintenance2 != 0 && value == 0)
+                {
+                    maintenance2Years = value;
+                    Maintenance2Price = 0;
+                    Maintenance2 = 0;
+                }
+                else
+                {
+                    maintenance2Years = value;
+                }
                 updateLifeCycleCost();
                 OnPropertyChanged("Maintenance2Years");
             }
@@ -273,7 +341,20 @@ namespace CarLifeCycleCostsClac
             }
             set
             {
-                maintenance3Years = value;
+                if (maintenance1Years == 0 && maintenance2Years == 0 && value == 0)
+                {
+                    maintenance3Years = 1;
+                }
+                else if ((maintenance1Years != 0 || maintenance2Years != 0) && Maintenance3Price != 0 && Maintenance3 != 0 && value == 0)
+                {
+                    maintenance3Years = value;
+                    Maintenance3Price = 0;
+                    Maintenance3 = 0;
+                }
+                else
+                {
+                    maintenance3Years = value;
+                }
                 updateLifeCycleCost();
                 OnPropertyChanged("Maintenance3Years");
             }
@@ -316,10 +397,6 @@ namespace CarLifeCycleCostsClac
         {
             get
             {
-                if (string.IsNullOrEmpty(fuelConsumption.ToString()))
-                {
-                    return 0.0f;
-                }
                 return fuelConsumption;
             }
             set
@@ -347,6 +424,7 @@ namespace CarLifeCycleCostsClac
                 OnPropertyChanged("ComparativeCosts");
             }
         }
+        /*
         public double ComparisonValue
         {
             get { return comparisonValue; }
@@ -365,12 +443,12 @@ namespace CarLifeCycleCostsClac
                 OnPropertyChanged("Color");
             }
         }
-
+        */
         public Car(string carModel, string expectedRangeOfOperation = "15000", string fuelPrice = "30.0", string purchasePrice = "340000",
             string technicalLife = "250000", string maintenance1 = "25000", string maintenance2 = "50000", string maintenance3 = "100000",
             string maintenance1Price = "8000", string maintenance2Price = "12000", string maintenance3Price = "16000", string maintenance1Years = "1",
             string maintenance2Years = "2", string maintenance3Years = "4", string mTBF = "65000", string averageRepairCosts = "25000",
-            string fuelConsumption = "7.6", string color = "Black")
+            string fuelConsumption = "7.6"/*, string color = "Black"*/)
         {
             try
             {
@@ -391,7 +469,7 @@ namespace CarLifeCycleCostsClac
                 this.mTBF = ulong.Parse(mTBF);
                 this.averageRepairCosts = ulong.Parse(averageRepairCosts);
                 this.fuelConsumption = double.Parse(fuelConsumption);
-                this.color = color;
+                //this.color = color;
             }
             catch(ArgumentException argEx)
             {
@@ -406,7 +484,29 @@ namespace CarLifeCycleCostsClac
                 MessageBox.Show(overflowEx.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
             updateLifeCycleCost();
-            }
+        }
+        protected Car(Car other)
+        {
+            this.carModel = other.carModel;
+            this.expectedRangeOfOperation = other.expectedRangeOfOperation;
+            this.fuelPrice = other.fuelPrice;
+            this.purchasePrice = other.purchasePrice;
+            this.technicalLife = other.technicalLife;
+            this.maintenance1 = other.maintenance1;
+            this.maintenance2 = other.maintenance2;
+            this.maintenance3 = other.maintenance3;
+            this.maintenance1Price = other.maintenance1Price;
+            this.maintenance2Price = other.maintenance2Price;
+            this.maintenance3Price = other.maintenance3Price;
+            this.maintenance1Years = other.maintenance1Years;
+            this.maintenance2Years = other.maintenance2Years;
+            this.maintenance3Years = other.maintenance3Years;
+            this.mTBF = other.mTBF;
+            this.averageRepairCosts = other.averageRepairCosts;
+            this.fuelConsumption = other.fuelConsumption;
+            this.lifeCycleCost = other.lifeCycleCost;
+            this.comparativeCosts = other.comparativeCosts;
+        }
         public void updateLifeCycleCost()
         {
             ulong preventiveMaintenance = 0;
