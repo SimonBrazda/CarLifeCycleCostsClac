@@ -162,9 +162,9 @@ namespace CarLifeCycleCostsClac
         private void carListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             removeButton.IsEnabled = e.AddedItems.Count == 0 ? false : true;
-            selectButton.IsEnabled = e.AddedItems.Count == 0 ? false : true;
+            selectButton.IsEnabled = isSelectButtEnabled();
         }
-
+        /*
         private void inputTextBox_TextChanged(object sender, TextChangedEventArgs e)
         {
             TextBox textBox = sender as TextBox;
@@ -173,7 +173,7 @@ namespace CarLifeCycleCostsClac
                 textBox.Text = "0";
             }
         }
-
+        */
         private void floatTextBox_TextChanged(object sender, TextChangedEventArgs e)
         {
             TextBox textBox = sender as TextBox;
@@ -205,6 +205,15 @@ namespace CarLifeCycleCostsClac
         public bool isSelectButtEnabled()
         {
             return carManager.ComparisonCar1 != null && carManager.SelectedCar.CarModel == carManager.ComparisonCar1.CarModel ? false : true;
+        }
+
+        private void inputTextBox_LostFocus(object sender, RoutedEventArgs e)
+        {
+            TextBox textBox = sender as TextBox;
+            if (string.IsNullOrEmpty(textBox.Text))
+            {
+                textBox.Text = "0";
+            }
         }
     }
 }
